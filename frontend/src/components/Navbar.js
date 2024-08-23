@@ -237,27 +237,29 @@ const Navbar = () => {
           )}
           <List>
             {menuItems.map((item, index) => (
-              <ListItem
-                button
-                key={index}
-                component={Link}
-                to={item.link}
-                sx={{
-                  '&:hover': {
-                    borderRight: '5px solid #f9ef1f', // Yellow highlight on the right
-                  },
-                }}
-              >
-                <ListItemIcon sx={{ color: '#01a9ff', marginRight: '-10px' }}>{item.icon}</ListItemIcon>
-                <ListItemText
-                  primary={item.text}
-                  primaryTypographyProps={{
-                    fontWeight: 600,
-                    color: 'rgb(70, 70, 70)', // Darker text color for sidebar items
-                    fontSize: '1rem',
+              ((item.text === "Admin" && user?.isAdmin===false) || (!user && item.text === "Admin")) ? null: (
+                <ListItem
+                  button
+                  key={index}
+                  component={Link}
+                  to={item.link}
+                  sx={{
+                    '&:hover': {
+                      borderRight: '5px solid #f9ef1f', // Yellow highlight on the right
+                    },
                   }}
-                />
-              </ListItem>
+                >
+                  <ListItemIcon sx={{ color: '#01a9ff', marginRight: '-10px' }}>{item.icon}</ListItemIcon>
+                  <ListItemText
+                    primary={item.text}
+                    primaryTypographyProps={{
+                      fontWeight: 600,
+                      color: 'rgb(70, 70, 70)', // Darker text color for sidebar items
+                      fontSize: '1rem',
+                    }}
+                  />
+                </ListItem>
+              )
             ))}
           </List>
         </Box>
