@@ -58,11 +58,11 @@ const Navbar = () => {
   };
 
   const menuItems = [
-    { text: 'Home', icon: <HomeIcon />, link: '/' },
+    { text: 'Home', icon: <HomeIcon />, link: '/home' },
     { text: 'Events', icon: <EventIcon />, link: '/events' },
     { text: 'Achievements', icon: <EmojiEventsIcon />, link: '/achievements' },
     { text: 'Chatbot', icon: <ChatIcon />, link: '/chatbot' },
-    { text: 'Admin', icon: <AdminPanelSettingsIcon />, link: '/admin' }
+    { text: 'Admin', icon: <AdminPanelSettingsIcon />, link: '/' }
   ];
 
   return (

@@ -6,7 +6,7 @@ import { useAuthContext } from "../hooks/useAuthContext"
 import WorkoutDetails from '../components/WorkoutDetails'
 import WorkoutForm from '../components/WorkoutForm'
 
-const Home = () => {
+const Admin = () => {
   const {workouts, dispatch} = useWorkoutsContext()
   const {user} = useAuthContext()
 
@@ -28,16 +28,15 @@ const Home = () => {
   }, [dispatch, user])
 
   return (
-    <div className="home">
-      HOME
-      {/* <div className="workouts">
+    <div className="admin">
+      <div className="workouts">
         {workouts && workouts.map((workout) => (
           <WorkoutDetails key={workout._id} workout={workout} />
         ))}
       </div>
-      <WorkoutForm /> */}
+      <WorkoutForm />
     </div>
   )
 }
 
-export default Home
+export default Admin;
