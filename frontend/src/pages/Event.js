@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useTheme } from '@mui/material/styles';
 import { Grid, TextField, MenuItem, Select, FormControl, InputLabel, Typography, Box } from "@mui/material";
 import { useMediaQuery } from '@mui/material';
-import {Container} from "@mui/material";
+import {Container, Card} from "@mui/material";
 
 const parseDate = (dateStr) => {
     const [day, month, year] = dateStr.split('/').map(Number);
@@ -67,21 +67,55 @@ const Event = () => {
     }, {});
 
     return (
-        <Box sx={{ backgroundColor: 'white', padding: theme.spacing(6)}}>
+        <Box sx={{ backgroundColor: 'white', padding: theme.spacing(0)}}>
             {/* Title Section */}
-            
+            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginBottom: theme.spacing(6)}}>
+                <Box
+                    component="img"
+                    src="https://d2yy7txqjmdbsq.cloudfront.net/nonprofits/05da5a45-cbcb-4e08-8bb8-2f2f5784583c/3031/gal__DSC1265.JPG"
+                    sx={{
+                        width: '100%',
+                        height: {xs: '250px',sm: '450px'},
+                        marginBottom: theme.spacing(6),
+                        borderRadius: theme.shape.borderRadius,
+                        objectFit: { xs: 'contain', sm: 'cover'},
+                        zIndex: 0,
+                        overflow: "auto",
+                        borderRadius: theme.shape.borderRadius,
+                    }}
+                />
+                <Typography
+                    sx={{
+                        padding: theme.spacing(1),
+                        borderRadius: theme.shape.borderRadius,
+                        boxShadow: '0 5px 20px rgba(0, 0, 0, 0.1)',
+                        marginTop: -10,
+                        width: {xs: '50%', sm: '20%'},
+                        alignContent: 'center',
+                        marginBottom: theme.spacing(0.5),
+                        zIndex: 1,
+                        backgroundColor: 'white',
+                        textAlign: 'center',
+                        fontWeight: 'bold',
+                        color: '#01a9ff',
+                    }}
+                    variant={isSmallScreen ? "h5" : "h4"}
+                >
+                    Events
+                </Typography>
+            </Box>
             {/* Search and Filter Section */}
             <Grid container spacing={4} alignItems="center" justifyContent="center" sx={{ marginBottom: theme.spacing(6) }}>
                 <Grid item xs={12} md={6} lg={4}>
                     <TextField
                         label="Search by title"
-                        variant="outlined"
+                        variant="standard"
                         fullWidth
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         sx={{
                             backgroundColor: '#fff',
-                            borderRadius: theme.shape.borderRadius,
+                            borderRadius: "5px",
                             boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
                         }}
                     />
@@ -102,7 +136,7 @@ const Event = () => {
                 </Grid>
                 <Grid item xs={12} md={3}>
                     <FormControl fullWidth variant="outlined" sx={{ backgroundColor: '#fff', borderRadius: theme.shape.borderRadius, boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)' }}>
-                        <InputLabel>Destination</InputLabel>
+                        <InputLabel>Location</InputLabel>
                         <Select
                             value={selectedDestination}
                             onChange={(e) => setSelectedDestination(e.target.value)}
