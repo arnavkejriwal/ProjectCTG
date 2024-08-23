@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Navbar from './components/Navbar'
 import Event from './pages/Event'
+import Admin from './pages/Admin'
 
 function App() {
   const { user } = useAuthContext()
@@ -17,17 +18,21 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
-            <Route 
+          <Route 
               path="/" 
               element={user ? <Home /> : <Navigate to="/login" />} 
             />
             <Route 
               path="/login" 
+              element={!user ? <Login /> : <Navigate to="/home" />} 
+            />
+            <Route 
+              path="/admin" 
               element={!user ? <Login /> : <Navigate to="/" />} 
             />
             <Route 
               path="/signup" 
-              element={!user ? <Signup /> : <Navigate to="/" />} 
+              element={!user ? <Signup /> : <Navigate to="/" />}
             />
             <Route 
               path="/events" 
