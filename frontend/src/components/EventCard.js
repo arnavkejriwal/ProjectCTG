@@ -45,15 +45,18 @@ export default function EventCard({ emoji, title, subtitle, date, location, onOp
                     variant="body1"
                     sx={{
                         position: 'absolute',
-                        top: 10,
-                        right: 15,
+                        top: 7.5,
+                        right: 7.5,
                         display: 'flex',
                         alignItems: 'center',
                         color: 'white',
                         fontWeight: 'bold',
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        borderRadius: '22px',
+                        padding: '5px',
                     }}
                 >
-                    <CalendarMonthIcon fontSize="small" sx={{ marginRight: 0.5 }} />
+                    <CalendarMonthIcon fontSize="small" sx={{ color: 'white', marginRight: 0.5 }} />
                     {date}
                 </Typography>
             </Box>
@@ -83,12 +86,12 @@ export default function EventCard({ emoji, title, subtitle, date, location, onOp
                     <Button
                         variant="contained"
                         sx={{
-                            backgroundColor: '#FFCC00', // Bright yellow like the website
+                            backgroundColor: '#f9ef1f', // Bright yellow like the website
                             color: '#000',
                             borderRadius: '20px',
                             padding: '6px 16px',
                             '&:hover': {
-                                backgroundColor: '#FFD633', // Slightly lighter on hover
+                                backgroundColor: '#f9ef1f', // Slightly lighter on hover
                             },
                         }}
                     >

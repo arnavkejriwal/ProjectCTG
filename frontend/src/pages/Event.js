@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useTheme } from '@mui/material/styles';
 import { Grid, TextField, MenuItem, Select, FormControl, InputLabel, Typography, Box } from "@mui/material";
 import { useMediaQuery } from '@mui/material';
+import {Container} from "@mui/material";
 
 const parseDate = (dateStr) => {
     const [day, month, year] = dateStr.split('/').map(Number);
@@ -66,7 +67,9 @@ const Event = () => {
     }, {});
 
     return (
-        <Box sx={{ backgroundColor: '#fff', padding: theme.spacing(6) }}>
+        <Box sx={{ backgroundColor: 'white', padding: theme.spacing(6)}}>
+            {/* Title Section */}
+            
             {/* Search and Filter Section */}
             <Grid container spacing={4} alignItems="center" justifyContent="center" sx={{ marginBottom: theme.spacing(6) }}>
                 <Grid item xs={12} md={6} lg={4}>
@@ -115,14 +118,14 @@ const Event = () => {
 
             {/* Event Groups by Month */}
             {Object.values(groupedEvents).map((group, idx) => (
-                <Box key={idx} sx={{ marginBottom: theme.spacing(6) }}>
+                <Box key={idx} sx={{ marginBottom: theme.spacing(6), backgroundColor: "#fff" }}>
                     <Typography
                         variant="h5"
                         gutterBottom
                         sx={{
                             fontWeight: 600,
                             color: '#333',
-                            borderBottom: `2px solid ${theme.palette.primary.main}`,
+                            borderBottom: `2px solid #333`,
                             paddingBottom: theme.spacing(1),
                         }}
                     >
