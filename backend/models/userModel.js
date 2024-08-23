@@ -20,12 +20,19 @@ const userSchema = new Schema({
   },
   number: {
     type: Number,
-    required: true
+    required: true,
+    unique: true
+  },
+  age: {
+    type: Number,
+  },
+  isAdmin:{
+    type: Boolean,
   }
 })
 
 // static signup method
-userSchema.statics.signup = async function(email, password, name, number) {
+userSchema.statics.signup = async function(email, password, name, number, age, isAdmin) {
 
   // validation
   if (!email || !password || !name || !number) {
@@ -44,10 +51,16 @@ userSchema.statics.signup = async function(email, password, name, number) {
     throw Error('Email already in use')
   }
 
+  const existsN = await this.findOne({ number })
+
+  if (existsN) {
+    throw Error('Number already in use')
+  }
+
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
 
-  const user = await this.create({ email, password: hash, name, number })
+  const user = await this.create({ email, password: hash, name, number, age, isAdmin })
 
   return user
 }

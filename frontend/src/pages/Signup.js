@@ -6,12 +6,14 @@ const Signup = () => {
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
+  const [age, setAge] = useState('')
+  const [isAdmin, setIsAdmin] = useState(false)
   const {signup, error, isLoading} = useSignup()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    await signup(email, password, name, number)
+    await signup(email, password, name, number, age, isAdmin)
   }
 
   return (
@@ -41,6 +43,12 @@ const Signup = () => {
         type="number" 
         onChange={(e) => setNumber(e.target.value)} 
         value={number} 
+      />
+      <label>Age:</label>
+      <input 
+        type="age" 
+        onChange={(e) => setAge(e.target.value)} 
+        value={age} 
       />
       <button disabled={isLoading}>Sign up</button>
       {error && <div className="error">{error}</div>}
