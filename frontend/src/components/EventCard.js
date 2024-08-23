@@ -3,14 +3,7 @@ import { Box, Typography, Button } from '@mui/material';
 import PlaceIcon from '@mui/icons-material/Place';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
-export default function EventCard({ emoji, title, subtitle, date, location, onOpen }) {
-    // Function to return the appropriate emoji
-    const renderEmoji = () => {
-        if (emoji === "Tea") return "🍵";
-        if (emoji === "Injection") return "💉";
-        return "🧠"; // Default brain emoji or any other based on context
-    };
-
+export default function EventCard({ event, onClick }) {
     return (
         <Box
             sx={{
@@ -28,7 +21,7 @@ export default function EventCard({ emoji, title, subtitle, date, location, onOp
                     boxShadow: '0 6px 12px rgba(0, 0, 0, 0.15)', // Slight hover effect
                 },
             }}
-            onClick={onOpen}
+            onClick={onClick}
         >
             <Box
                 sx={{
@@ -51,26 +44,24 @@ export default function EventCard({ emoji, title, subtitle, date, location, onOp
                         alignItems: 'center',
                         color: 'white',
                         fontWeight: 'bold',
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.3)',
                         borderRadius: '22px',
                         padding: '5px',
                     }}
                 >
                     <CalendarMonthIcon fontSize="small" sx={{ color: 'white', marginRight: 0.5 }} />
-                    {date}
+                    {event.date}
                 </Typography>
             </Box>
-            <Box sx={{ p: { xs: 2, sm: 3 } }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                    <Typography variant="h4" sx={{ mr: 2 }}>
-                        {renderEmoji()}
-                    </Typography>
-                    <Typography variant="h5" fontWeight="bold" sx={{ color: '#333' }}>
-                        {title}
-                    </Typography>
-                </Box>
+            <Box sx={{ p: 2 }}>
+                <Typography variant="h4">
+                    {event.emoji}
+                </Typography>
+                <Typography variant="h5" fontWeight="bold" sx={{ color: "#333" }}>
+                    {event.title}
+                </Typography>
                 <Typography variant="body1" color="textSecondary" sx={{ mb: 3 }}>
-                    {subtitle}
+                    {event.subtitle}
                 </Typography>
                 <Box
                     sx={{
@@ -81,21 +72,12 @@ export default function EventCard({ emoji, title, subtitle, date, location, onOp
                 >
                     <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center', color: '#555' }}>
                         <PlaceIcon fontSize="small" sx={{ mr: 0.5 }} />
-                        {location}
+                        {event.location}
                     </Typography>
                     <Button
                         variant="contained"
-                        sx={{
-                            backgroundColor: '#f9ef1f', // Bright yellow like the website
-                            color: '#000',
-                            borderRadius: '20px',
-                            padding: '6px 16px',
-                            '&:hover': {
-                                backgroundColor: '#f9ef1f', // Slightly lighter on hover
-                            },
-                        }}
                     >
-                        + Join
+                        Join
                     </Button>
                 </Box>
             </Box>

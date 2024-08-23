@@ -102,11 +102,10 @@ const Navbar = () => {
               component={Link}
               to="/home"
               sx={{
-                color: '#333', // Darker color for the title
+                color: 'black', // Darker color for the title
                 textDecoration: 'none',
                 flexGrow: 1, // Take up space to push profile to the right
-                fontFamily: 'Arial, sans-serif',
-                fontWeight: 600,
+                fontWeight: 'bold',
                 fontSize: '1.5rem',
                 display: 'flex', // Add flex for alignment
                 alignItems: 'center', // Vertically center the logo and text
