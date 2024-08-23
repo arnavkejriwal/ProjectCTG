@@ -8,7 +8,13 @@ const eventSchema = new mongoose.Schema({
     image: String,
     subtitle: String,
     date: String,
-    location: String
+    location: String,
+    description: String,
+    organiser:String,
+    organiser_img:String,
+    banner_img:String,
+    volunteer_vacancies: Number,
+    participant_vacancies:Number
 }, { collection: 'events', versionKey: false });
 
 

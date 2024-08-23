@@ -1,81 +1,99 @@
 import React from 'react';
-import { Box, Typography, Button} from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import PlaceIcon from '@mui/icons-material/Place';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 export default function EventCard({ emoji, title, subtitle, date, location, onOpen }) {
+    // Function to return the appropriate emoji
+    const renderEmoji = () => {
+        if (emoji === "Tea") return "🍵";
+        if (emoji === "Injection") return "💉";
+        return "🧠"; // Default brain emoji or any other based on context
+    };
+
     return (
         <Box
-          sx={{
-            width: { xs: '80%', sm: 400, md: 500 },
-            height: { xs: 300, sm: 350, md: 400 },
-            border: '2px solid lightgrey',
-            borderRadius: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            boxShadow: '0 6px 12px rgba(0, 0, 0, 0.2)',
-            overflow: 'hidden',
-            transition: 'transform 0.3s, box-shadow 0.3s',
-            '&:hover': {
-              transform: 'translateY(-10px)',
-              boxShadow: '0 12px 24px rgba(0, 0, 0, 0.3)',
-            },
-          }}
-          onClick={onOpen}
+            sx={{
+                width: { xs: '100%', sm: 400, md: 450 },
+                border: '1px solid #E0E0E0',
+                borderRadius: '10px',
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: 'white',
+                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Soft shadow
+                overflow: 'hidden',
+                transition: 'transform 0.3s, box-shadow 0.3s',
+                '&:hover': {
+                    transform: 'translateY(-5px)',
+                    boxShadow: '0 6px 12px rgba(0, 0, 0, 0.15)', // Slight hover effect
+                },
+            }}
+            onClick={onOpen}
         >
             <Box
                 sx={{
                     width: '100%',
-                    height: '60%',
+                    height: '200px',
+                    backgroundImage: 'url(https://www.sadiasteaparty.com/wp-content/uploads/2013/03/MG_1111.jpg)', // Event image
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    filter: 'brightness(0.7)',
                     position: 'relative',
                 }}
-            >   
-                <Box
-                    sx={{
-                        width: '100%',
-                        height: '100%',
-                        backgroundImage: 'url(/image.jpg)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        filter: 'brightness(0.6)',
-                    }}
-                />
+            >
                 <Typography
                     variant="body1"
                     sx={{
-                        display: 'flex',
-                        alignItems: 'start',
-                        justifyContent: 'flex-end',
+                        position: 'absolute',
                         top: 10,
                         right: 15,
-                        position: 'absolute',
+                        display: 'flex',
+                        alignItems: 'center',
+                        color: 'white',
+                        fontWeight: 'bold',
                     }}
-                    color={'white'}
                 >
-                    <CalendarMonthIcon fontSize="small" />
+                    <CalendarMonthIcon fontSize="small" sx={{ marginRight: 0.5 }} />
                     {date}
                 </Typography>
             </Box>
-            <Box sx={{ p: { xs: 1, sm: 2, md: 3 } }}>
-                <Box sx={{ display: 'block', textAlign: 'left' }}>
-                    <Typography variant="h4">{emoji}</Typography>
-                    <Typography variant="h4" fontWeight="bold">{title}</Typography>
-                    <Typography variant="h6" color={'grey'}>{subtitle}</Typography>
+            <Box sx={{ p: { xs: 2, sm: 3 } }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                    <Typography variant="h4" sx={{ mr: 2 }}>
+                        {renderEmoji()}
+                    </Typography>
+                    <Typography variant="h5" fontWeight="bold" sx={{ color: '#333' }}>
+                        {title}
+                    </Typography>
                 </Box>
+                <Typography variant="body1" color="textSecondary" sx={{ mb: 3 }}>
+                    {subtitle}
+                </Typography>
                 <Box
                     sx={{
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        mt: 4,
                     }}
                 >
-                    <Typography variant="body1" sx={{ display: 'flex', alignItems: 'start' }} color={'grey'}>
-                        <PlaceIcon fontSize="small" />
+                    <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center', color: '#555' }}>
+                        <PlaceIcon fontSize="small" sx={{ mr: 0.5 }} />
                         {location}
                     </Typography>
-                    <Button variant="contained" >+ Join</Button>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            backgroundColor: '#FFCC00', // Bright yellow like the website
+                            color: '#000',
+                            borderRadius: '20px',
+                            padding: '6px 16px',
+                            '&:hover': {
+                                backgroundColor: '#FFD633', // Slightly lighter on hover
+                            },
+                        }}
+                    >
+                        + Join
+                    </Button>
                 </Box>
             </Box>
         </Box>
