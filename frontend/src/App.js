@@ -32,7 +32,7 @@ function App() {
             />
             <Route 
               path="/signup" 
-              element={!user ? <Signup /> : <Navigate to="/" />}
+              element={!user ? <Signup /> : <Navigate to="/home" />}
             />
             <Route 
               path="/events" 
