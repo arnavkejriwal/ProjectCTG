@@ -46,7 +46,7 @@ const Signup = () => {
       />
       <label>Age:</label>
       <input 
-        type="age" 
+        type="date" 
         onChange={(e) => setAge(e.target.value)} 
         value={age} 
       />
