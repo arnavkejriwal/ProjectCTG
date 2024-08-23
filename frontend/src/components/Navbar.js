@@ -15,7 +15,8 @@ import {
   Avatar,
   Box,
   Menu,
-  MenuItem
+  MenuItem,
+  tableBodyClasses
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
@@ -26,11 +27,16 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import { useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 const Navbar = () => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
   const navigate = useNavigate();
+  const theme = useTheme();
+
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -72,7 +78,7 @@ const Navbar = () => {
         sx={{
           backgroundColor: 'white', // Light color for a sober navbar
           boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-          padding: '0 20px',
+          padding: isSmallScreen ? '0 10px' : '0 20px', // Closer padding on small screens
         }}
       >
         <Toolbar>
@@ -81,55 +87,60 @@ const Navbar = () => {
             color="inherit"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ marginRight: 2, color: '#333' }} // Darker color for the icon
+            sx={{
+              marginRight: 2,
+              color: '#333', // Darker color for the icon
+            }}
           >
             <MenuIcon />
           </IconButton>
 
           {/* Logo / Title */}
-          <Typography
-            variant="h6"
-            component={Link}
-            to="/"
-            sx={{
-              color: '#333', // Darker color for the title
-              textDecoration: 'none',
-              flexGrow: 1,
-              fontFamily: 'Arial, sans-serif',
-              fontWeight: 600,
-              fontSize: '1.5rem',
-              display: 'flex', // Add flex for alignment
-              alignItems: 'center', // Vertically center the logo and text
-            }}
-          >
-            {/* Circular logo */}
-            <Box
-              component="img"
-              src="https://cdn.prod.website-files.com/5dbfd0c08b3107b843917e24/6017ba951aa635c7c910d37e_Zubin%20Logo.png"
-              alt="zubin"
+          {isSmallScreen ? null : (
+            <Typography
+              variant="h6"
+              component={Link}
+              to="/home"
               sx={{
-                width: 75,
-                height: 75,
-                borderRadius: '50%', // Circular shape
-                objectFit: 'cover', // Ensure the image fits within the circle properly
-                marginRight: '10px', // Space between image and text
+                color: '#333', // Darker color for the title
+                textDecoration: 'none',
+                flexGrow: 1, // Take up space to push profile to the right
+                fontFamily: 'Arial, sans-serif',
+                fontWeight: 600,
+                fontSize: '1.5rem',
+                display: 'flex', // Add flex for alignment
+                alignItems: 'center', // Vertically center the logo and text
               }}
-            />
-            The Zubin Foundation
-          </Typography>
+            >
+              {/* Circular logo */}
+              <Box
+                component="img"
+                src="https://cdn.prod.website-files.com/5dbfd0c08b3107b843917e24/6017ba951aa635c7c910d37e_Zubin%20Logo.png"
+                alt="zubin"
+                sx={{
+                  width: 75,
+                  height: 75,
+                  borderRadius: '50%', // Circular shape
+                  objectFit: 'cover', // Ensure the image fits within the circle properly
+                  marginRight: '10px', // Space between image and text
+                }}
+              />
+              The Zubin Foundation
+            </Typography>
+          )}
 
-          {/* Profile Icon */}
+          {/* Profile Icon - Floated right on small screens */}
           {user ? (
-            <IconButton onClick={handleProfileMenuOpen}>
-              <Avatar sx={{ bgcolor: '#333' }}>
-                <AccountCircleIcon />
-              </Avatar>
-            </IconButton>
+            <Box sx={{ ml: isSmallScreen ? 'auto' : 'none' }}>
+              <IconButton onClick={handleProfileMenuOpen}>
+                <AccountCircleIcon sx={{ fontSize: 50 }} />
+              </IconButton>
+            </Box>
           ) : (
-            <div>
+            <Box sx={{ ml: isSmallScreen ? 'auto' : 'none' }}>
               <Link to="/login" style={{ color: '#333', marginRight: 16 }}>Login</Link>
               <Link to="/signup" style={{ color: '#333' }}>Signup</Link>
-            </div>
+            </Box>
           )}
 
           {/* Profile Menu */}
@@ -137,7 +148,6 @@ const Navbar = () => {
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={handleProfileMenuClose}
-            sx={{ mt: '45px' }}
           >
             <MenuItem onClick={handleProfileClick}>
               <PersonIcon sx={{ marginRight: 1 }} /> Profile
@@ -160,6 +170,71 @@ const Navbar = () => {
           role="presentation"
           onClick={handleDrawerToggle}
         >
+          {!isSmallScreen ? null : (
+            <Typography
+            variant="h6"
+            component={Link}
+            to="/home"
+            sx={{
+              color: '#333', // Darker color for the title
+              textDecoration: 'none',
+              flexGrow: 1, // Take up space to push profile to the right
+              fontFamily: 'Arial, sans-serif',
+              fontWeight: 600,
+              fontSize: '1.5rem',
+              display: 'flex', // Add flex for alignment
+              flexDirection: 'column', // Stack elements vertically
+              alignItems: 'flex-start', // Align to the left
+            }}
+          >
+            {/* Logo and text in a vertical stack */}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column', // Stack logo and text vertically
+                alignItems: 'flex-start', // Align content to the left
+              }}
+            >
+              {/* Circular logo */}
+              <Box
+                component="img"
+                src="https://cdn.prod.website-files.com/5dbfd0c08b3107b843917e24/6017ba951aa635c7c910d37e_Zubin%20Logo.png"
+                alt="zubin"
+                mt={2}
+                sx={{
+                  width: 75,
+                  height: 75,
+                  borderRadius: '50%', // Circular shape
+                  objectFit: 'cover', // Ensure the image fits within the circle properly
+                  marginBottom: '2px', // Space between image and text
+                }}
+              />
+              
+              {/* Text below the logo */}
+              <Box
+                sx={{
+                  fontSize: '1 rem', // Adjust text size
+                  fontWeight: tableBodyClasses.fontWeightMedium,
+                  ml: 2, // Bold text
+                }}
+              >
+                The Zubin Foundation
+              </Box>
+          
+              {/* Horizontal line */}
+              <Box
+                sx={{
+                  width: '100%', 
+                  height: '2px', 
+                  backgroundColor: '#333', 
+                  marginTop: '8px',
+                  marginBottom: '12px',
+                  backgroundColor: 'white', 
+                }}
+              />
+            </Box>
+          </Typography>          
+          )}
           <List>
             {menuItems.map((item, index) => (
               <ListItem
@@ -173,12 +248,12 @@ const Navbar = () => {
                   },
                 }}
               >
-                <ListItemIcon sx={{ color: '#00416A' }}>{item.icon}</ListItemIcon>
+                <ListItemIcon sx={{ color: '#01a9ff', marginRight: '-10px' }}>{item.icon}</ListItemIcon>
                 <ListItemText
                   primary={item.text}
                   primaryTypographyProps={{
                     fontWeight: 600,
-                    color: '#00416A', // Darker text color for sidebar items
+                    color: 'rgb(70, 70, 70)', // Darker text color for sidebar items
                     fontSize: '1rem',
                   }}
                 />
@@ -189,7 +264,7 @@ const Navbar = () => {
       </Drawer>
 
       {/* Add some margin to prevent content from being hidden behind the navbar */}
-      <Box sx={{ marginTop: '64px' }}> 
+      <Box sx={{ marginTop: '64px' }}>
         {/* Your page content goes here */}
       </Box>
     </Box>
