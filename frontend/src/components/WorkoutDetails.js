@@ -1,11 +1,10 @@
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 import EventCard from './EventCard'
-import { Box } from '@mui/material'
+import { Grid, IconButton, Box, Typography } from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete'
 
-// date fns
-// import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-
+// WorkoutDetails component
 const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useWorkoutsContext()
   const { user } = useAuthContext()
@@ -24,21 +23,33 @@ const WorkoutDetails = ({ workout }) => {
     const json = await response.json()
 
     if (response.ok) {
-      dispatch({type: 'DELETE_WORKOUT', payload: json})
+      dispatch({ type: 'DELETE_WORKOUT', payload: json })
     }
   }
 
   return (
-    // <div className="workout-details">
-    //   <h4>{workout.title}</h4>
-    //   <p><strong>Participant Quota: </strong>{workout.load}</p>
-    //   <p><strong>Date: </strong>{workout.reps}</p>
-    //   {/* <p>{formatDistanceToNow(new Date(workout.createdAt), { addSuffix: true })}</p> */}
-    //   <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
-    // </div>
-    <Box>
-      <EventCard event={workout} />
-    </Box>
+    <Grid container padding={2}>
+      {/* Event Card */}
+        <Box
+          container
+          display={'flex'}
+          alignItems="center"
+          justifyContent="space-between"
+          style={{
+            padding: '16px',
+            boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+            borderRadius: '8px',
+          }}
+        >
+          <EventCard event={workout} />
+          <Box>
+          </Box>
+          {/* Delete Button */}
+          <IconButton aria-label="delete" onClick={handleClick}>
+            <DeleteIcon color="#333" />
+          </IconButton>
+        </Box>
+    </Grid>
   )
 }
 

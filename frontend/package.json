@@ -19,6 +19,7 @@
     "react-scripts": "5.0.1",
     "react-slick": "^0.30.2",
     "swiper": "^11.1.10",
+    "react-split": "^2.0.14",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import {
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  TextareaAutosize,
+} from "@mui/material";
 
 const WorkoutForm = () => {
   const { dispatch } = useWorkoutsContext();
@@ -13,8 +20,8 @@ const WorkoutForm = () => {
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
   const [eventId, setEventId] = useState(1);
-  const [time,setTime] = useState("");
-  const [points,setPoints] = useState(0);
+  const [time, setTime] = useState("");
+  const [points, setPoints] = useState(0);
   const [bannerImg, setBannerImg] = useState("");
   const [description, setDescription] = useState("");
   const [organiser, setOrganiser] = useState("");
@@ -33,7 +40,6 @@ const WorkoutForm = () => {
       return;
     }
 
-    // Create the JSON object based on the entered fields
     const eventDetails = {
       emoji,
       title,
@@ -47,10 +53,9 @@ const WorkoutForm = () => {
       organiser,
       organiser_img: organiserImg,
       participant_vacancies: participantVacancies,
-      volunteer_vacancies: volunteerVacancies
+      volunteer_vacancies: volunteerVacancies,
     };
 
-    // API call to submit the event details
     const response = await fetch("/api/workouts/", {
       method: "POST",
       body: JSON.stringify(eventDetails),
@@ -64,8 +69,9 @@ const WorkoutForm = () => {
 
     if (!response.ok) {
       setError(json.error);
-      setEmptyFields(json.emptyFields);
+      setEmptyFields(json.emptyFields || []);
     }
+
     if (response.ok) {
       // Clear all fields after successful submission
       setEmoji("🧠");
@@ -92,127 +98,194 @@ const WorkoutForm = () => {
   };
 
   return (
-    <form className="create" onSubmit={handleSubmit}>
-      <h3>Add a New Event</h3>
+    <form onSubmit={handleSubmit}>
+      <Typography variant="h4" gutterBottom>
+        Add a New Event
+      </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Emoji"
+            fullWidth
+            variant="outlined"
+            value={emoji}
+            onChange={(e) => setEmoji(e.target.value)}
+            error={emptyFields.includes("emoji")}
+          />
+        </Grid>
 
-      <label>Emoji:</label>
-      <input
-        type="text"
-        onChange={(e) => setEmoji(e.target.value)}
-        value={emoji}
-        className={emptyFields.includes("emoji") ? "error" : ""}
-      />
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Event Title"
+            fullWidth
+            variant="outlined"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            error={emptyFields.includes("title")}
+          />
+        </Grid>
 
-      <label>Event Title:</label>
-      <input
-        type="text"
-        onChange={(e) => setTitle(e.target.value)}
-        value={title}
-        className={emptyFields.includes("title") ? "error" : ""}
-      />
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Subtitle"
+            fullWidth
+            variant="outlined"
+            value={subtitle}
+            onChange={(e) => setSubtitle(e.target.value)}
+            error={emptyFields.includes("subtitle")}
+          />
+        </Grid>
 
-      <label>Subtitle:</label>
-      <input
-        type="text"
-        onChange={(e) => setSubtitle(e.target.value)}
-        value={subtitle}
-        className={emptyFields.includes("subtitle") ? "error" : ""}
-      />
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Image URL"
+            fullWidth
+            variant="outlined"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            error={emptyFields.includes("image")}
+          />
+        </Grid>
 
-      <label>Image URL:</label>
-      <input
-        type="text"
-        onChange={(e) => setImage(e.target.value)}
-        value={image}
-        className={emptyFields.includes("image") ? "error" : ""}
-      />
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Date"
+            fullWidth
+            variant="outlined"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            error={emptyFields.includes("date")}
+          />
+        </Grid>
 
-      <label>Date:</label>
-      <input
-        type="text"
-        onChange={(e) => setDate(e.target.value)}
-        value={date}
-        className={emptyFields.includes("date") ? "error" : ""}
-      />
-      <label>Time:</label>
-      <input
-        type="text"
-        onChange={(e) => setTime(e.target.value)}
-        value={date}
-        className={emptyFields.includes("time") ? "error" : ""}
-      />
-      <label>Points:</label>
-      <input
-        type="number"
-        onChange={(e) => setPoints(e.target.value)}
-        value={points}
-        className={emptyFields.includes("points") ? "error" : ""}
-      />
-      <label>Location:</label>
-      <input
-        type="text"
-        onChange={(e) => setLocation(e.target.value)}
-        value={location}
-        className={emptyFields.includes("location") ? "error" : ""}
-      />
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Time"
+            fullWidth
+            variant="outlined"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+            error={emptyFields.includes("time")}
+          />
+        </Grid>
 
-      <label>Event ID:</label>
-      <input
-        type="number"
-        onChange={(e) => setEventId(e.target.value)}
-        value={eventId}
-        className={emptyFields.includes("eventId") ? "error" : ""}
-      />
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Points"
+            fullWidth
+            variant="outlined"
+            type="number"
+            value={points}
+            onChange={(e) => setPoints(e.target.value)}
+            error={emptyFields.includes("points")}
+          />
+        </Grid>
 
-      <label>Banner Image URL:</label>
-      <input
-        type="text"
-        onChange={(e) => setBannerImg(e.target.value)}
-        value={bannerImg}
-        className={emptyFields.includes("bannerImg") ? "error" : ""}
-      />
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Location"
+            fullWidth
+            variant="outlined"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            error={emptyFields.includes("location")}
+          />
+        </Grid>
 
-      <label>Description:</label>
-      <textarea
-        onChange={(e) => setDescription(e.target.value)}
-        value={description}
-        className={emptyFields.includes("description") ? "error" : ""}
-      />
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Event ID"
+            fullWidth
+            variant="outlined"
+            type="number"
+            value={eventId}
+            onChange={(e) => setEventId(e.target.value)}
+            error={emptyFields.includes("eventId")}
+          />
+        </Grid>
 
-      <label>Organiser:</label>
-      <input
-        type="text"
-        onChange={(e) => setOrganiser(e.target.value)}
-        value={organiser}
-        className={emptyFields.includes("organiser") ? "error" : ""}
-      />
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Banner Image URL"
+            fullWidth
+            variant="outlined"
+            value={bannerImg}
+            onChange={(e) => setBannerImg(e.target.value)}
+            error={emptyFields.includes("bannerImg")}
+          />
+        </Grid>
 
-      <label>Organiser Image URL:</label>
-      <input
-        type="text"
-        onChange={(e) => setOrganiserImg(e.target.value)}
-        value={organiserImg}
-        className={emptyFields.includes("organiserImg") ? "error" : ""}
-      />
+        <Grid item xs={12}>
+          <TextField
+            label="Description"
+            fullWidth
+            multiline
+            rows={4}
+            variant="outlined"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            error={emptyFields.includes("description")}
+          />
+        </Grid>
 
-      <label>Participant Vacancies:</label>
-      <input
-        type="number"
-        onChange={(e) => setParticipantVacancies(e.target.value)}
-        value={participantVacancies}
-        className={emptyFields.includes("participantVacancies") ? "error" : ""}
-      />
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Organiser"
+            fullWidth
+            variant="outlined"
+            value={organiser}
+            onChange={(e) => setOrganiser(e.target.value)}
+            error={emptyFields.includes("organiser")}
+          />
+        </Grid>
 
-      <label>Volunteer Vacancies:</label>
-      <input
-        type="number"
-        onChange={(e) => setVolunteerVacancies(e.target.value)}
-        value={volunteerVacancies}
-        className={emptyFields.includes("volunteerVacancies") ? "error" : ""}
-      />
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Organiser Image URL"
+            fullWidth
+            variant="outlined"
+            value={organiserImg}
+            onChange={(e) => setOrganiserImg(e.target.value)}
+            error={emptyFields.includes("organiserImg")}
+          />
+        </Grid>
 
-      <button>Add Event</button>
-      {error && <div className="error">{error}</div>}
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Participant Vacancies"
+            fullWidth
+            variant="outlined"
+            type="number"
+            value={participantVacancies}
+            onChange={(e) => setParticipantVacancies(e.target.value)}
+            error={emptyFields.includes("participantVacancies")}
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Volunteer Vacancies"
+            fullWidth
+            variant="outlined"
+            type="number"
+            value={volunteerVacancies}
+            onChange={(e) => setVolunteerVacancies(e.target.value)}
+            error={emptyFields.includes("volunteerVacancies")}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <Button variant="contained" color="primary" type="submit">
+            Add Event
+          </Button>
+        </Grid>
+
+        {error && (
+          <Grid item xs={12}>
+            <Typography color="error">{error}</Typography>
+          </Grid>
+        )}
+      </Grid>
     </form>
   );
 };
