@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Navbar from './components/Navbar'
 import Event from './pages/Event'
+import Profile from './pages/Profile'
 import Admin from './pages/Admin'
 
 function App() {
@@ -37,6 +38,10 @@ function App() {
             <Route 
               path="/events" 
               element={<Event />} 
+            />
+            <Route 
+              path="/profile" 
+              element={<Profile />} 
             />
           </Routes>
         </div>
