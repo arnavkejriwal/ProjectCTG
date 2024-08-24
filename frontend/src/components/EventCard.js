@@ -13,12 +13,12 @@ export default function EventCard({ event, onClick }) {
                 display: 'flex',
                 flexDirection: 'column',
                 backgroundColor: 'white',
-                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Soft shadow
+                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
                 overflow: 'hidden',
                 transition: 'transform 0.3s, box-shadow 0.3s',
                 '&:hover': {
                     transform: 'translateY(-5px)',
-                    boxShadow: '0 6px 12px rgba(0, 0, 0, 0.15)', // Slight hover effect
+                    boxShadow: '0 6px 12px rgba(0, 0, 0, 0.15)',
                 },
             }}
             onClick={onClick}
@@ -27,10 +27,6 @@ export default function EventCard({ event, onClick }) {
                 sx={{
                     width: '100%',
                     height: '200px',
-                    backgroundImage: 'url(https://www.sadiasteaparty.com/wp-content/uploads/2013/03/MG_1111.jpg)', // Event image
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    filter: 'brightness(0.7)',
                     position: 'relative',
                 }}
             >
@@ -42,21 +38,61 @@ export default function EventCard({ event, onClick }) {
                         right: 7.5,
                         display: 'flex',
                         alignItems: 'center',
-                        color: 'white',
+                        color: 'lightgrey',
                         fontWeight: 'bold',
                         backgroundColor: 'rgba(0, 0, 0, 0.3)',
                         borderRadius: '22px',
                         padding: '5px',
+                        zIndex: 2,
                     }}
                 >
                     <CalendarMonthIcon fontSize="small" sx={{ color: 'white', marginRight: 0.5 }} />
                     {event.date}
                 </Typography>
+                <Box
+                    sx={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundImage: 'url(https://www.sadiasteaparty.com/wp-content/uploads/2013/03/MG_1111.jpg)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                    }}
+                />
+                <Box
+                    sx={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'rgba(0, 0, 0, 0.4)', 
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        zIndex: 1,
+                    }}
+                />
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        bottom: '-16px',
+                        left: '5%',
+                        backgroundColor: 'white',
+                        borderRadius: '50%',
+                        border: '1px solid lightgrey',
+                        boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+                        width: '60px',
+                        height: '60px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 2,
+                    }}
+                >
+                    <Typography variant="h4">{event.emoji}</Typography>
+                </Box>
             </Box>
-            <Box sx={{ p: 2 }}>
-                <Typography variant="h4">
-                    {event.emoji}
-                </Typography>
+            <Box sx={{ p: 2, mt: 1.5 }}>
                 <Typography variant="h5" fontWeight="bold" sx={{ color: "#333" }}>
                     {event.title}
                 </Typography>
