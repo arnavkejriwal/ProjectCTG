@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Box, Typography, LinearProgress, Tabs, Tab, TextField, Button } from '@mui/material'
-
+import { Grid, Box, Typography, LinearProgress, Tabs, Tab } from '@mui/material'
+import Achievement from '../components/Achievement';
 
 function Profile() {
     const [selectedTab, setSelectedTab] = useState('achievements');
@@ -24,7 +24,22 @@ function Profile() {
     let content;
     switch (selectedTab) {
     case 'achievements':
-        content = <></>;
+        content = (
+            <Grid container spacing={2} sx={{mt: 6}}>
+                <Grid item xs={12} sm={6} md={3}>
+                    <Achievement />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <Achievement />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <Achievement />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <Achievement />
+                </Grid>
+            </Grid>
+        )
         break;
     case 'events':
         content = <></>;
