@@ -14,6 +14,7 @@ import {
   ListItemText,
   Avatar,
   Box,
+  Button,
   Menu,
   MenuItem,
   tableBodyClasses
@@ -137,8 +138,21 @@ const Navbar = () => {
             </Box>
           ) : (
             <Box sx={{ ml: isSmallScreen ? 'auto' : 'none' }}>
-              <Link to="/login" style={{ color: '#333', marginRight: 16 }}>Login</Link>
-              <Link to="/signup" style={{ color: '#333' }}>Signup</Link>
+              <Button
+                component={Link}
+                to="/login"
+                variant="text"
+                sx={{ marginRight: 2 }}
+              >
+                Login
+              </Button>
+              <Button
+                component={Link}
+                to="/signup"
+                variant="text"
+              >
+                Signup
+              </Button>
             </Box>
           )}
 
@@ -170,7 +184,7 @@ const Navbar = () => {
           onClick={handleDrawerToggle}
         >
           {!isSmallScreen ? null : (
-            <Typography
+          <Typography
             variant="h6"
             component={Link}
             to="/home"
@@ -191,18 +205,18 @@ const Navbar = () => {
               sx={{
                 display: 'flex',
                 flexDirection: 'column', // Stack logo and text vertically
-                alignItems: 'flex-start', // Align content to the left
+                alignItems: 'flex-start',
+                mt: 4,
+                mb: 3,
               }}
             >
               {/* Circular logo */}
               <Box
                 component="img"
                 src="https://cdn.prod.website-files.com/5dbfd0c08b3107b843917e24/6017ba951aa635c7c910d37e_Zubin%20Logo.png"
-                alt="zubin"
-                mt={2}
                 sx={{
-                  width: 75,
-                  height: 75,
+                  width: 90,
+                  height: 90,
                   borderRadius: '50%', // Circular shape
                   objectFit: 'cover', // Ensure the image fits within the circle properly
                   marginBottom: '2px', // Space between image and text
@@ -210,29 +224,17 @@ const Navbar = () => {
               />
               
               {/* Text below the logo */}
-              <Box
+              <Typography
                 sx={{
-                  fontSize: '1 rem', // Adjust text size
-                  fontWeight: tableBodyClasses.fontWeightMedium,
-                  ml: 2, // Bold text
+                  fontSize: '100%', // Adjust text size
+                  fontWeight: 'bold',
+                  ml: 2.5,
                 }}
               >
                 The Zubin Foundation
-              </Box>
-          
-              {/* Horizontal line */}
-              <Box
-                sx={{
-                  width: '100%', 
-                  height: '2px', 
-                  backgroundColor: '#333', 
-                  marginTop: '8px',
-                  marginBottom: '12px',
-                  backgroundColor: 'white', 
-                }}
-              />
-            </Box>
-          </Typography>          
+              </Typography>
+            </Box>  
+          </Typography>      
           )}
           <List>
             {menuItems.map((item, index) => (
@@ -244,16 +246,16 @@ const Navbar = () => {
                   to={item.link}
                   sx={{
                     '&:hover': {
-                      borderRight: '5px solid #f9ef1f', // Yellow highlight on the right
+                      borderRight: '5px solid #f9ef1f',
                     },
                   }}
                 >
-                  <ListItemIcon sx={{ color: '#01a9ff', marginRight: '-10px' }}>{item.icon}</ListItemIcon>
+                  <ListItemIcon sx={{ color: '#01a9ff', marginRight: '-15px' }}>{item.icon}</ListItemIcon>
                   <ListItemText
                     primary={item.text}
                     primaryTypographyProps={{
                       fontWeight: 600,
-                      color: 'rgb(70, 70, 70)', // Darker text color for sidebar items
+                      color: 'rgb(70, 70, 70)',
                       fontSize: '1rem',
                     }}
                   />
