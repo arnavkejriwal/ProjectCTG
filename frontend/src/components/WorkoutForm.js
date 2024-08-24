@@ -134,7 +134,20 @@ const WorkoutForm = () => {
         value={date}
         className={emptyFields.includes("date") ? "error" : ""}
       />
-
+      <label>Time:</label>
+      <input
+        type="text"
+        onChange={(e) => setTime(e.target.value)}
+        value={date}
+        className={emptyFields.includes("time") ? "error" : ""}
+      />
+      <label>Points:</label>
+      <input
+        type="number"
+        onChange={(e) => setPoints(e.target.value)}
+        value={points}
+        className={emptyFields.includes("points") ? "error" : ""}
+      />
       <label>Location:</label>
       <input
         type="text"
