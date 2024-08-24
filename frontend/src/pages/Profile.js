@@ -129,7 +129,7 @@ function Profile() {
                     Events participated: 8
                 </Typography>
             </Box>
-            <Box sx={{mt: 8, width:{xs: '100%', sm: '100%', md: '70%'} }}>
+            <Box sx={{mt: 6, width:{xs: '100%', sm: '100%', md: '70%'} }}>
                 <Tabs variant="fullWidth" value={selectedTab} onChange={handleTabChange}>
                     <Tab label="Achievements" value="achievements"/>
                     <Tab label="My Events" value="events"/>
