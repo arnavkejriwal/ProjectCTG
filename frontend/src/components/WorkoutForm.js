@@ -1,15 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
-import {
-  Button,
-  Grid,
-  TextField,
-  Typography,
-  TextareaAutosize,
-} from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 
-const WorkoutForm = () => {
+const WorkoutForm = ({ selectedWorkout, setSelectedWorkout }) => {
   const { dispatch } = useWorkoutsContext();
   const { user } = useAuthContext();
 
@@ -19,18 +13,63 @@ const WorkoutForm = () => {
   const [image, setImage] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
-  const [eventId, setEventId] = useState(1);
+  const [eventId, setEventId] = useState(0);
   const [time, setTime] = useState("");
   const [points, setPoints] = useState(0);
   const [bannerImg, setBannerImg] = useState("");
   const [description, setDescription] = useState("");
   const [organiser, setOrganiser] = useState("");
   const [organiserImg, setOrganiserImg] = useState("");
-  const [participantVacancies, setParticipantVacancies] = useState(30);
-  const [volunteerVacancies, setVolunteerVacancies] = useState(15);
+  const [participantVacancies, setParticipantVacancies] = useState(0);
+  const [volunteerVacancies, setVolunteerVacancies] = useState(0);
 
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
+  const [isUpdateMode, setIsUpdateMode] = useState(false);
+
+  useEffect(() => {
+    if (selectedWorkout) {
+      setEmoji(selectedWorkout.emoji || "🧠");
+      setTitle(selectedWorkout.title || "");
+      setSubtitle(selectedWorkout.subtitle || "");
+      setImage(selectedWorkout.image || "");
+      setDate(selectedWorkout.date || "");
+      setLocation(selectedWorkout.location || "");
+      setEventId(selectedWorkout.event_id || 0);
+      setTime(selectedWorkout.time || "");
+      setPoints(selectedWorkout.points || 0);
+      setBannerImg(selectedWorkout.banner_img || "");
+      setDescription(selectedWorkout.description || "");
+      setOrganiser(selectedWorkout.organiser || "");
+      setOrganiserImg(selectedWorkout.organiser_img || "");
+      setParticipantVacancies(selectedWorkout.participant_vacancies || 0);
+      setVolunteerVacancies(selectedWorkout.volunteer_vacancies || 0);
+      setIsUpdateMode(true);
+    } else {
+      resetForm();
+      setIsUpdateMode(false);
+    }
+  }, [selectedWorkout]);
+
+  const resetForm = () => {
+    setEmoji("🧠");
+    setTitle("");
+    setSubtitle("");
+    setImage("");
+    setDate("");
+    setLocation("");
+    setEventId(0);
+    setTime("");
+    setPoints(0);
+    setBannerImg("");
+    setDescription("");
+    setOrganiser("");
+    setOrganiserImg("");
+    setParticipantVacancies(0);
+    setVolunteerVacancies(0);
+    setError(null);
+    setEmptyFields([]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,14 +95,17 @@ const WorkoutForm = () => {
       volunteer_vacancies: volunteerVacancies,
     };
 
-    const response = await fetch("/api/workouts/", {
-      method: "POST",
-      body: JSON.stringify(eventDetails),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      isUpdateMode ? `/api/workouts/${selectedWorkout._id}` : "/api/workouts/",
+      {
+        method: isUpdateMode ? "PATCH" : "POST",
+        body: JSON.stringify(eventDetails),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
 
     const json = await response.json();
 
@@ -73,37 +115,20 @@ const WorkoutForm = () => {
     }
 
     if (response.ok) {
-      // Clear all fields after successful submission
-      setEmoji("🧠");
-      setTitle("");
-      setSubtitle("");
-      setImage("");
-      setDate("");
-      setLocation("");
-      setEventId(1);
-      setBannerImg("");
-      setDescription("");
-      setOrganiser("");
-      setOrganiserImg("");
-      setParticipantVacancies(30);
-      setVolunteerVacancies(15);
-      setError(null);
-      setTime("");
-      setPoints(0);
-      setEmptyFields([]);
-
-      // Dispatch the newly created event
-      dispatch({ type: "CREATE_WORKOUT", payload: json });
+      resetForm();
+      setSelectedWorkout(null);
+      setIsUpdateMode(false);
+      dispatch({ type: isUpdateMode ? "UPDATE_WORKOUT" : "CREATE_WORKOUT", payload: json });
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form fullWidth onSubmit={handleSubmit}>
       <Typography variant="h4" gutterBottom>
-        Add a New Event
+        {isUpdateMode ? "Update Event" : "Add a New Event"}
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+      <Grid item xs={12} sm={6}>
           <TextField
             label="Emoji"
             fullWidth
@@ -273,12 +298,20 @@ const WorkoutForm = () => {
             error={emptyFields.includes("volunteerVacancies")}
           />
         </Grid>
-
-        <Grid item xs={12}>
+        
+        <Grid item xs={12} sm={6}>
           <Button variant="contained" color="primary" type="submit">
-            Add Event
+            {isUpdateMode ? "Update Event" : "Add Event"}
           </Button>
         </Grid>
+
+        {isUpdateMode? (
+          <Grid item xs={12} sm={6}>
+            <Button onClick={() => setSelectedWorkout(null)} variant="contained" color="primary" type="submit">
+              Clear Form
+            </Button>
+          </Grid>
+        ):null}
 
         {error && (
           <Grid item xs={12}>
