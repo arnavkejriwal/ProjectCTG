@@ -73,7 +73,7 @@ const Event = () => {
     return (
         <Box sx={{ backgroundColor: 'white', padding: theme.spacing(0)}}>
             { eventDetailsOpen? (
-                <EventDetails event={selectedEvent} />
+                <EventDetails event={selectedEvent} onClose={() => { setEventDetailsOpen(false); setSelectedEvent(null); }}/>
             ) : (
                 <>
                     {/* Title Section */}
