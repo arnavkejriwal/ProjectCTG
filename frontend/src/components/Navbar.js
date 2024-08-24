@@ -75,11 +75,11 @@ const Navbar = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
-        position="fixed" // Make navbar fixed at the top
+        position="fixed"
         sx={{
-          backgroundColor: 'white', // Light color for a sober navbar
+          backgroundColor: 'white', 
           boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-          padding: isSmallScreen ? '0 10px' : '0 20px', // Closer padding on small screens
+          padding: isSmallScreen ? '0 10px' : '0 20px', 
         }}
       >
         <Toolbar>
@@ -90,7 +90,7 @@ const Navbar = () => {
             onClick={handleDrawerToggle}
             sx={{
               marginRight: 2,
-              color: '#333', // Darker color for the icon
+              color: '#333',
             }}
           >
             <MenuIcon />
@@ -103,13 +103,13 @@ const Navbar = () => {
               component={Link}
               to="/home"
               sx={{
-                color: 'black', // Darker color for the title
+                color: 'black',
                 textDecoration: 'none',
-                flexGrow: 1, // Take up space to push profile to the right
+                flexGrow: 1,
                 fontWeight: 'bold',
                 fontSize: '1.5rem',
-                display: 'flex', // Add flex for alignment
-                alignItems: 'center', // Vertically center the logo and text
+                display: 'flex',
+                alignItems: 'center',
               }}
             >
               {/* Circular logo */}
@@ -120,9 +120,9 @@ const Navbar = () => {
                 sx={{
                   width: 75,
                   height: 75,
-                  borderRadius: '50%', // Circular shape
-                  objectFit: 'cover', // Ensure the image fits within the circle properly
-                  marginRight: '10px', // Space between image and text
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  marginRight: '10px',
                 }}
               />
               The Zubin Foundation
@@ -177,7 +177,7 @@ const Navbar = () => {
         <Box
           sx={{
             width: 250,
-            backgroundColor: '#ffffff', // White background for the sidebar
+            backgroundColor: '#ffffff',
             height: '100%',
           }}
           role="presentation"
@@ -189,22 +189,22 @@ const Navbar = () => {
             component={Link}
             to="/home"
             sx={{
-              color: '#333', // Darker color for the title
+              color: '#333',
               textDecoration: 'none',
-              flexGrow: 1, // Take up space to push profile to the right
+              flexGrow: 1,
               fontFamily: 'Arial, sans-serif',
               fontWeight: 600,
               fontSize: '1.5rem',
-              display: 'flex', // Add flex for alignment
-              flexDirection: 'column', // Stack elements vertically
-              alignItems: 'flex-start', // Align to the left
+              display: 'flex', 
+              flexDirection: 'column',
+              alignItems: 'flex-start',
             }}
           >
             {/* Logo and text in a vertical stack */}
             <Box
               sx={{
                 display: 'flex',
-                flexDirection: 'column', // Stack logo and text vertically
+                flexDirection: 'column',
                 alignItems: 'flex-start',
                 mt: 4,
                 mb: 3,
@@ -217,16 +217,16 @@ const Navbar = () => {
                 sx={{
                   width: 90,
                   height: 90,
-                  borderRadius: '50%', // Circular shape
-                  objectFit: 'cover', // Ensure the image fits within the circle properly
-                  marginBottom: '2px', // Space between image and text
+                  borderRadius: '50%',
+                  objectFit: 'cover', 
+                  marginBottom: '2px',
                 }}
               />
               
               {/* Text below the logo */}
               <Typography
                 sx={{
-                  fontSize: '100%', // Adjust text size
+                  fontSize: '100%',
                   fontWeight: 'bold',
                   ml: 2.5,
                 }}
@@ -266,9 +266,7 @@ const Navbar = () => {
         </Box>
       </Drawer>
 
-      {/* Add some margin to prevent content from being hidden behind the navbar */}
       <Box sx={{ marginTop: '64px' }}>
-        {/* Your page content goes here */}
       </Box>
     </Box>
   );
