@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, LinearProgress, Tabs, Tab } from '@mui/material'
+import { Box, Typography, LinearProgress, Tabs, Tab, TextField, Button } from '@mui/material'
 
 
 function Profile() {
@@ -8,6 +8,18 @@ function Profile() {
     const handleTabChange = (e, v) => {
         setSelectedTab(v);
     }
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
+    const [number, setNumber] = useState('');
+    const [age, setAge] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    const handleSave = (e) => {
+        e.preventDefault();
+        console.log({ email, password, name, number, age });
+    };
 
     let content;
     switch (selectedTab) {
@@ -18,7 +30,59 @@ function Profile() {
         content = <></>;
         break;
     case 'info':
-        content = <></>;
+        content = (
+            <Box component="form" onSubmit={handleSave} sx={{ mt: 2, width: { xs: '100%', sm: '60%' }, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', mx: 'auto' }}>
+                <TextField
+                    label="Email address"
+                    type="email"
+                    fullWidth
+                    margin="normal"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <TextField
+                    label="Password"
+                    type="password"
+                    fullWidth
+                    margin="normal"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <TextField
+                    label="Full Name"
+                    type="text"
+                    fullWidth
+                    margin="normal"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+                <TextField
+                    label="Phone Number"
+                    type="number"
+                    fullWidth
+                    margin="normal"
+                    value={number}
+                    onChange={(e) => setNumber(e.target.value)}
+                />
+                <TextField
+                    label="Age"
+                    type="date"
+                    fullWidth
+                    margin="normal"
+                    InputLabelProps={{ shrink: true }}
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                />
+                <Box sx={{ mt: 5, width:'100%', display: 'flex', flexDirection:'row', justifyContent:'space-between' }}>
+                    <Button variant="contained" color="error" sx={{ mt: 2 }}>
+                        Log Out
+                    </Button>
+                    <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+                        Save
+                    </Button>
+                </Box>
+            </Box>
+        )
         break;
     default:
         content = null;
@@ -130,7 +194,7 @@ function Profile() {
                 </Typography>
             </Box>
             <Box sx={{mt: 6, width:{xs: '100%', sm: '100%', md: '70%'} }}>
-                <Tabs variant="fullWidth" value={selectedTab} onChange={handleTabChange}>
+                <Tabs variant="fullWidth" value={selectedTab} onChange={handleTabChange} sx={{width: { xs: '100%', sm: '60%' }, mx: 'auto'}}>
                     <Tab label="Achievements" value="achievements"/>
                     <Tab label="My Events" value="events"/>
                     <Tab label="Account" value="info"/>
