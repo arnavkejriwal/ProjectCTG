@@ -1,68 +1,144 @@
-import React from 'react';
-import { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import LinearProgress from '@mui/material/LinearProgress';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Typography from  '@mui/material/Typography';
+import React, { useState } from 'react';
+import { Box, Typography, LinearProgress, Tabs, Tab } from '@mui/material'
 
 
 function Profile() {
-  const [tabValue, setTabValue] = useState('achievements');
-  const [indexValue, setIndexValue] = useState(1);
+    const [selectedTab, setSelectedTab] = useState('achievements');
 
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
-  }
+    const handleTabChange = (e, v) => {
+        setSelectedTab(v);
+    }
 
-const handleChangeTabIndex = (index) => {
-    setIndexValue(index);
-};
+    let content;
+    switch (selectedTab) {
+    case 'achievements':
+        content = <></>;
+        break;
+    case 'events':
+        content = <></>;
+        break;
+    case 'info':
+        content = <></>;
+        break;
+    default:
+        content = null;
+        break;
+    }
 
-let content;
-if (tabValue === 'achievements') {
-    content = (
-        <></>
-    );
-} else if (tabValue === 'info') {
-    content = (
-        <></>
-    );
-}
-
-return (
-    <Box style={{display:'flex', flexDirection:'column', width:'100%', height:'100%', justifyContent:'space-between'}}>
-        <Box style={{display:'flex', flexDirection:'row', width:'100%', height:'20%', alignItems:'center', maxHeight:'200px', maxWidth:'700px'}}>
-            <Grid style={{width:'30%', alignItems:'center', justifyContent:'flexDirection'}}>
-                <AccountCircleIcon style={{width:'100%', height:'100%', color:'#0000008a'}}/>
-            </Grid>
-            <Grid style={{width:'70%', height:'100%', alignItems:'center'}}>
-                <Typography style={{width:'50%', height:'100%', paddingBottom:'15px'}}>
-                    Display Name
+    return (
+        <Box sx={{display: 'flex', flexDirection:'column', alignItems:'center', justifyContent:'center'}}>
+            <Box sx={{mt: 4, mb: 4}}/>
+            <Box
+                sx={{
+                    boxShadow: 10,
+                    padding: 3,
+                    borderRadius: 2,
+                    width: {xs: '80%', sm: '60%', md: '40%'},
+                    margin: 'auto',
+                    backgroundColor: 'white',
+                    border: '3px solid lightgrey',
+                    position: 'relative',
+                }}
+            >
+                <LinearProgress
+                    variant="determinate"
+                    value={75}
+                    sx={{
+                        boxShadow: '0 0 5px 5px lightyellow',
+                        position: 'absolute',
+                        top: 20,
+                        right: 20,
+                        width: '40%',
+                        height: 15,
+                        borderRadius: '10px',
+                        border: '2px solid #FDDA0D',
+                    }}
+                />
+                <Typography
+                    variant="body2"
+                    sx={{
+                        position: 'absolute',
+                        top: 40,
+                        right: 25,
+                        width: '25%',
+                        textAlign: 'right',
+                        color: 'grey',
+                    }}
+                >
+                    2750 PTS
                 </Typography>
-                <Grid style={{width:'70%', height:'100%'}}>
-                    <LinearProgress
-                        variant="determinate"
-                        value={50}
-                        sx={{height:'12px', borderRadius:'5px'}}
-                    />
-                </Grid>
-            </Grid>
-        </Box>
-        <Box item style={{display:'flex', flexDirection:'row', width:'100%', height:'80%', alignItems:'center', maxHeight:'400px', maxWidth:'700px'}}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider', width:'100%'}}>
-                <Tabs value={tabValue} onChange={handleTabChange} variant="fullWidth" sx={{width:'100%'}}>
-                    <Tab label="Achievements" value="achievements" />
-                    <Tab label="Personal Info" value="info" />
+                <Box sx={{
+                    boxShadow: 4,
+                    borderRadius: '50%',
+                    border: '3px solid lightgrey',
+                    backgroundColor: 'lightgrey',
+                    backgroundImage: 'url("https://m.media-amazon.com/images/M/MV5BMDEyMTk5MmEtM2VhYi00ZTYxLTlhZWItZjI0Zjc2NGNhMTk0L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjU1NzQ0NzY@._V1_.jpg")',
+                    backgroundSize: 'contain',
+                    backgroundPosition: 'center',
+                    width: 120,
+                    height: 120,
+                    position: 'absolute',
+                    top: -40,
+                }}>
+                    <Box sx={{
+                        boxShadow: 4,
+                        border: '2px solid white',
+                        borderRadius: '50%',
+                        backgroundColor: '#01a9ff',
+                        width: 35,
+                        height: 35,
+                        position: 'absolute',
+                        bottom: 0,
+                        right: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}>
+                        <Typography sx={{fontWeight: 'bold', fontSize: '0.8rem', color: 'white'}} >
+                            LV5
+                        </Typography>
+                    </Box>
+                </Box>
+                <Typography
+                    variant="h4"
+                    sx={{
+                        marginTop: 10,
+                        marginBottom: 1,
+                        textAlign: 'left',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    John Doe
+                </Typography>
+                <Typography
+                    variant="body1"
+                    sx={{
+                        textAlign: 'left',
+                        color: 'grey',
+                    }}
+                >
+                    Events volunteered: 5
+                </Typography>
+                <Typography
+                    variant="body1"
+                    sx={{
+                        textAlign: 'left',
+                        color: 'grey',
+                    }}
+                >
+                    Events participated: 8
+                </Typography>
+            </Box>
+            <Box sx={{mt: 8, width:{xs: '100%', sm: '100%', md: '70%'} }}>
+                <Tabs variant="fullWidth" value={selectedTab} onChange={handleTabChange}>
+                    <Tab label="Achievements" value="achievements"/>
+                    <Tab label="My Events" value="events"/>
+                    <Tab label="Account" value="info"/>
                 </Tabs>
                 {content}
             </Box>
         </Box>
-    </Box>
-  );
+    );
 }
 
 export default Profile;
