@@ -5,6 +5,8 @@ import { useTheme } from '@mui/material/styles';
 import { Grid, TextField, MenuItem, Select, FormControl, InputLabel, Typography, Box } from "@mui/material";
 import { useMediaQuery } from '@mui/material';
 import {Container, Card} from "@mui/material";
+import SearchBar from "../components/SearchBar";
+import FilterOverlay from "../components/FilterOverlay";
 
 const parseDate = (dateStr) => {
     const [day, month, year] = dateStr.split('/').map(Number);
@@ -69,6 +71,15 @@ const Event = () => {
 
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [eventDetailsOpen, setEventDetailsOpen] = useState(false);
+    
+    const handleSearch = (query) => {
+        // Update the events based on the search query
+        console.log("Search Query:", query);
+    };
+    const handleFilterChange = (filters) => {
+        // Update the events based on the selected filters
+        console.log("Selected Filters:", filters);
+    };
 
     return (
         <Box sx={{ backgroundColor: 'white', padding: theme.spacing(0)}}>
@@ -111,53 +122,20 @@ const Event = () => {
                             Events
                         </Typography>
                     </Box>
-                    
-                    {/* Search and Filter Section */}
-                    <Grid container spacing={4} alignItems="center" justifyContent="center" sx={{ marginBottom: theme.spacing(6) }}>
-                        <Grid item xs={12} md={6} lg={4}>
-                            <TextField
-                                label="Search by title"
-                                variant="standard"
-                                fullWidth
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                sx={{
-                                    backgroundColor: '#fff',
-                                    borderRadius: "5px",
-                                    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-                                }} />
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <FormControl fullWidth variant="outlined" sx={{ backgroundColor: '#fff', borderRadius: theme.shape.borderRadius, boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)' }}>
-                                <InputLabel>Month</InputLabel>
-                                <Select
-                                    value={selectedMonth}
-                                    onChange={(e) => setSelectedMonth(e.target.value)}
-                                    label="Month"
-                                >
-                                    {monthOptions.map((month, index) => (
-                                        <MenuItem key={index} value={month}>{month}</MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <FormControl fullWidth variant="outlined" sx={{ backgroundColor: '#fff', borderRadius: theme.shape.borderRadius, boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)' }}>
-                                <InputLabel>Location</InputLabel>
-                                <Select
-                                    value={selectedDestination}
-                                    onChange={(e) => setSelectedDestination(e.target.value)}
-                                    label="Destination"
-                                >
-                                    {destinationOptions.map((destination, index) => (
-                                        <MenuItem key={index} value={destination}>{destination}</MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
 
-                    {/* Event Groups by Month */}
+                    {/* Filter Overlay */}
+                    <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: theme.spacing(4) }}>
+                        <FilterOverlay />
+                        <SearchBar
+                            monthOptions={monthOptions}
+                            destinationOptions={destinationOptions}
+                            onSearch={handleSearch}
+                            onFilterChange={handleFilterChange}
+                        />
+                        
+                    </Box>
+
+                                        {/* Event Groups by Month */}
                     {Object.values(groupedEvents).map((group, idx) => (
                         <Box key={idx} sx={{ marginBottom: theme.spacing(6), backgroundColor: "#fff" }}>
                             <Typography
