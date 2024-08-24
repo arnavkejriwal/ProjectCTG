@@ -1,5 +1,7 @@
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
+import EventCard from './EventCard'
+import { Box } from '@mui/material'
 
 // date fns
 // import formatDistanceToNow from 'date-fns/formatDistanceToNow'
@@ -27,13 +29,16 @@ const WorkoutDetails = ({ workout }) => {
   }
 
   return (
-    <div className="workout-details">
-      <h4>{workout.title}</h4>
-      <p><strong>Participant Quota: </strong>{workout.load}</p>
-      <p><strong>Date: </strong>{workout.reps}</p>
-      {/* <p>{formatDistanceToNow(new Date(workout.createdAt), { addSuffix: true })}</p> */}
-      <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
-    </div>
+    // <div className="workout-details">
+    //   <h4>{workout.title}</h4>
+    //   <p><strong>Participant Quota: </strong>{workout.load}</p>
+    //   <p><strong>Date: </strong>{workout.reps}</p>
+    //   {/* <p>{formatDistanceToNow(new Date(workout.createdAt), { addSuffix: true })}</p> */}
+    //   <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
+    // </div>
+    <Box>
+      <EventCard event={workout} />
+    </Box>
   )
 }
 

@@ -1,4 +1,5 @@
 const Event = require('../models/events');
+const mongoose = require('mongoose');
 
 exports.get_events = async (req, res) => {
     try {
