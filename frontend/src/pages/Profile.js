@@ -24,9 +24,13 @@ const handleChangeTabIndex = (index) => {
 
 let content;
 if (tabValue === 'achievements') {
-    content = ();
+    content = (
+        <></>
+    );
 } else if (tabValue === 'info') {
-    content = ();
+    content = (
+        <></>
+    );
 }
 
 return (
