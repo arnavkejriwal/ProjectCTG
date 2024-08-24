@@ -10,6 +10,7 @@ import {ArrowBackIos, ArrowForwardIos} from '@mui/icons-material';
 import Slider from 'react-slick';
 import EventCard from '../components/EventCard';
 import { Grid, IconButton } from '@mui/material';
+import TestimonialCard from '../components/TestimonialCard'
 
 const NextArrow = ({ onClick }) => {
   return (
@@ -192,6 +193,69 @@ const Admin = () => {
               <ArrowForwardIos fontSize="large" />
           </IconButton>
         </Box>
+
+        <Box sx={{ marginBottom: theme.spacing(1), backgroundColor: "#fff" }}>
+          <Typography
+              variant="h4"
+              align="center"
+              sx={{
+                  fontWeight: 600,
+                  color: '#333',
+                  borderBottom: `2px solid #333`,
+                  paddingBottom: theme.spacing(1),
+              }}
+          >
+              Hear From Our Community!
+          </Typography>
+      </Box>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: theme.spacing(6), backgroundColor: '#fff' }}>
+      <Grid
+        container
+        spacing={isSmallScreen ? 2 : 4}
+        sx={{
+            marginTop: theme.spacing(2),
+        }}
+    >
+            <Grid
+              xs={12}
+              md={6}
+              ml={2}
+              lg={4}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                '&:hover': {
+                  transform: 'scale(1.03)',
+                  transition: 'transform 0.2s ease-in-out',
+                }
+              }}
+            >
+             <TestimonialCard/>
+            </Grid>
+
+            <Grid
+              xs={12}
+              md={6}
+              ml={2}
+              lg={4}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                '&:hover': {
+                  transform: 'scale(1.03)',
+                  transition: 'transform 0.2s ease-in-out',
+                }
+              }}
+            >
+             <TestimonialCard/>
+            </Grid>
+
+            
+
+          </Grid>
+          </Box>
     
     </div>
   )
