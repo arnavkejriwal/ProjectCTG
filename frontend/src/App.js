@@ -9,6 +9,7 @@ import Navbar from './components/Navbar'
 import Event from './pages/Event'
 import Profile from './pages/Profile'
 import Admin from './pages/Admin'
+import Quizzes from './pages/Quizzes'
 
 function App() {
   const { user } = useAuthContext()
@@ -42,6 +43,10 @@ function App() {
             <Route 
               path="/profile" 
               element={<Profile />} 
+            />
+            <Route 
+              path="/quizzes" 
+              element={<Quizzes />} 
             />
           </Routes>
         </div>
