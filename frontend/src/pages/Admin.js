@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material/styles';
 import { Box, Typography} from '@mui/material';
 import { ArrowForwardIos } from '@mui/icons-material';
 import EventCard from '../components/EventCard';
-import TestimonialCard from '../components/TestimonialCard';
+import TestimonialCard, {testimonialsData} from '../components/TestimonialCard';
 import Slider from "react-slick"; // Carousel library
 import {useMediaQuery} from '@mui/material';
 import "slick-carousel/slick/slick.css";
@@ -204,11 +204,15 @@ const Admin = () => {
 
         <Box sx={{ marginBottom: theme.spacing(6), borderRadius: "20px" }}>
           <Slider {...carouselSettings}>
-          {[1, 2, 3].map((_, index) => (
-            <Box key={index} sx={{ textAlign: 'center' }}>
-              <TestimonialCard />
-            </Box>
-          ))}
+          {testimonialsData.map((testimonial, index) => (
+                <TestimonialCard
+                    key={index}
+                    imageUrl={testimonial.imageUrl}
+                    name={testimonial.name}
+                    role={testimonial.role}
+                    testimonial={testimonial.testimonial}
+                />
+            ))}
           </Slider>
         </Box>
       </Box>

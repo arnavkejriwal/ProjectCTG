@@ -18,7 +18,7 @@ const testimonialsData = [
         imageUrl: "https://img.freepik.com/free-photo/cheerful-mixed-race-girl-sweater-walking-park_1262-19109.jpg?t=st=1724620677~exp=1724624277~hmac=b8d96c92d29bc183a302ef2dfb7c340ccc2909470a0ed2bf850553e3cf7b6d26&w=1800",
         name: "Priya Patel",
         role: "Event In-Charge",
-        testimonial: "Organizing events like the Chai Gatherhttps://media.istockphoto.com/id/1473466969/photo/portrait-of-happy-senior-woman-at-park.jpg?s=612x612&w=0&k=20&c=5Z-qbIOMEtdZbiMglrSLLipE0I0W9C_FpmSUgJXjsgk=ing is my passion."
+        testimonial: "Organizing events like the Chai Gathering is my passion."
     },
     {
         imageUrl: "https://img.freepik.com/free-photo/indian-man-smiling-cheerful-expression-closeup-portrait_53876-129387.jpg",
