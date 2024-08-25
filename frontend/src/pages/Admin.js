@@ -39,16 +39,6 @@ const Admin = () => {
     }
 });
 
-// Filtering the events for the event cards grid
-// const filteredEvents = bannerData
-//     .filter(event => {
-//         const eventDate = parseDate(event.date);
-//         const today = new Date();
-//         return eventDate >= today;
-//     })
-//     .sort((a, b) => parseDate(a.date) - parseDate(b.date));
-
-
 
   const filterClosestEvents = (events) => {
     const sortedEvents = events
@@ -174,7 +164,7 @@ const Admin = () => {
       <Box sx={{ marginBottom: theme.spacing(6), borderRadius: "20px" }}>
         <Slider {...carouselSettings}>
           {eventData.map((event, index) => (
-            <Box key={index} sx={{padding: theme.spacing(2)}} onClick={() => { setSelectedEvent(event); setEventDetailsOpen(true); }}>
+            <Box key={index} sx={{padding: { xs: 0, sm: theme.spacing(2)}}} onClick={() => { setSelectedEvent(event); setEventDetailsOpen(true); }}>
               <EventCard event={event} />
             </Box>
           ))}

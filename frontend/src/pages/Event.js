@@ -34,21 +34,37 @@ const Event = () => {
     const destinationOptions = ["All", "Tung Chung", "Kowloon", "Stadium", "Park"];
 
     const coolImages = [
+
         {
-          header: "Zubin Annual Fundraising Dinner",
-          image: "https://www.zubinfoundation.org/wp-content/uploads/2023/05/3.jpg",
-          text: `Image description`,
+
+          header: "Zubin Annual Dinner",
+
+          image: "https://www.zubinfoundation.org/wp-content/uploads/2023/05/1F.jpg",
+
+          text: `Images From Our Annual Dinner`,
+
         },
+
         {
+
           header: "Mental Health Awareness",
-          image: "https://images.unsplash.com/photo-1593113616828-6f22bca04804?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          text: `Image description`,
+
+          image: "https://images.squarespace-cdn.com/content/v1/583f73fc3e00bebc1c9adc7f/1614716173170-RVVRG1F6AIXZX92IR3KF/Session+4+Sunday-55.jpg",
+
+          text: `Outward Bounds Retreat`,
+
         },
+
         {
+
           header: "Health Camp",
+
           image: "https://images.unsplash.com/photo-1643321612557-57cef422f401?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          text: `Image description`,
+
+          text: `Highlights From Our Healthcare Drive`,
+
         },
+
       ];
 
     const getEvents = async () => {

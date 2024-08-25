@@ -227,10 +227,10 @@ form.signup, form.login {
 
 .image-accordion-item img {
   position: absolute;
+  object-fit: cover;
   z-index: 0;
   top: 50%;
   left: 50%;
   translate: -50% -50%;
-  height: 150%;
   filter: grayscale(0.6);
 }
