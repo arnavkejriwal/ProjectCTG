@@ -6,7 +6,7 @@ const TestimonialCard = () => {
         <div className="testimonial-card">
             <Box
                 sx={{
-                    width: { xs: '100%', sm: 300, md: 350 },
+                    width: { xs: '100%', sm: 300, md: 400 },
                     border: '1px solid #E0E0E0',
                     borderRadius: '10px',
                     display: 'flex',

@@ -1,10 +1,18 @@
-import { useState } from "react";
-import "./styles.css";
+import { useState, useEffect } from "react";
 
 export const ImageAccordion = ({ items }) => {
   const [active, setActive] = useState(0);
 
-  const handleToggle = (index) => setActive(index);
+  // Automatically change the active image every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActive((prevActive) => (prevActive + 1) % items.length); // Loop through images
+    }, 5000); // Change image every 5 seconds
+
+    return () => clearInterval(interval); // Clear interval on component unmount
+  }, [items.length]);
+
+  const handleToggle = (index) => setActive(index); // Allow manual toggle
 
   return (
     <section className="image-accordion">
@@ -16,7 +24,11 @@ export const ImageAccordion = ({ items }) => {
             className={`image-accordion-item ${isActive}`}
             onClick={() => handleToggle(index)}
           >
-            <img src={item.image} />
+            <img
+              style={{ objectFit: "cover" }}
+              src={item.image}
+              alt={item.altText || ""}
+            />
             <div className="content">
               <span className="material-symbols-outlined">photo_camera</span>
               <div>

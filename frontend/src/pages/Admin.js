@@ -1,15 +1,18 @@
-import { useEffect, useState } from 'react'
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
-import { useAuthContext } from "../hooks/useAuthContext"
-import {useTheme} from '@mui/material/styles';
-import {Box, Typography} from '@mui/material';
-import { useMediaQuery } from '@mui/material';
-import {ArrowForwardIos} from '@mui/icons-material';
+import { useEffect, useState } from 'react';
+import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { useTheme } from '@mui/material/styles';
+import { Box, Typography, Grid, IconButton } from '@mui/material';
+import { ArrowForwardIos } from '@mui/icons-material';
 import EventCard from '../components/EventCard';
-import { Grid, IconButton } from '@mui/material';
-import TestimonialCard from '../components/TestimonialCard'
-import Footer from '../components/Footer'
-
+import TestimonialCard from '../components/TestimonialCard';
+import Footer from '../components/Footer';
+import { ImageAccordion } from '../components/ImageAccordion';
+import Slider from "react-slick"; // Carousel library
+import {useMediaQuery} from '@mui/material';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { ArrowBackIos} from "@mui/icons-material";
 
 const Admin = () => {
   const theme = useTheme();
@@ -18,242 +21,203 @@ const Admin = () => {
 
   const getEvents = async () => {
     try {
-        const response = await fetch('/api/events/get_events');
-        const json = await response.json();
-        const closestEvents = filterClosestEvents(json);
-        setEventData(closestEvents);
+      const response = await fetch('/api/events/get_events');
+      const json = await response.json();
+      const closestEvents = filterClosestEvents(json);
+      setEventData(closestEvents);
     } catch (error) {
-        console.error("Error getting event data:", error);
+      console.error("Error getting event data:", error);
     }
   };
 
   const filterClosestEvents = (events) => {
-      const sortedEvents = events
-          .map(event => ({
-              ...event,
-              parsedDate: parseDate(event.date)
-          }))
-          .sort((a, b) => a.parsedDate - b.parsedDate);
-      return sortedEvents.slice(0, 3);
+    const sortedEvents = events
+      .map(event => ({
+        ...event,
+        parsedDate: parseDate(event.date),
+      }))
+      .sort((a, b) => a.parsedDate - b.parsedDate);
+    return sortedEvents.slice(0, 3);
   };
 
   const parseDate = (dateString) => {
-      const [day, month, year] = dateString.split('/');
-      return new Date(`${year}-${month}-${day}`);
+    const [day, month, year] = dateString.split('/');
+    return new Date(`${year}-${month}-${day}`);
   };
 
   useEffect(() => {
-      if (!eventData.length) {
-          getEvents();
-      }
+    if (!eventData.length) {
+      getEvents();
+    }
   });
+
+  const coolImages = [
+    {
+      header: "Zubin Annual Fundraising Dinner",
+      image: "https://www.zubinfoundation.org/wp-content/uploads/2023/05/3.jpg",
+      text: `Image description`,
+    },
+    {
+      header: "Mental Health Awareness",
+      image: "https://images.unsplash.com/photo-1593113616828-6f22bca04804?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      text: `Image description`,
+    },
+    {
+      header: "Health Camp",
+      image: "https://images.unsplash.com/photo-1643321612557-57cef422f401?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      text: `Image description`,
+    },
+  ];
+
+
+  const carouselSettings = {
+    dots: true,
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 5000, // Change slide every 5 seconds
+    arrows: true,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    dotsClass: "slick-dots custom-dots", 
+    responsive: [
+      {
+        breakpoint: 1025,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      }
+    ],
+  };
 
   return (
     <div>
-      <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginBottom: theme.spacing(6) }}>
-          <Box
-              component="img"
-              src="https://www.thestandard.com.hk/newsImage/20240621/50092838contentPhoto1.jpg"
-              sx={{
-                  width: '100%',
-                  height: { xs: '250px', sm: '450px' },
-                  marginBottom: theme.spacing(6),
-                  borderRadius: theme.shape.borderRadius,
-                  objectFit: { xs: 'contain', sm: 'cover' },
-                  zIndex: 0,
-                  overflow: "auto",
-                  borderRadius: theme.shape.borderRadius,
-              }} />
-          <Typography
-              sx={{
-                  padding: theme.spacing(1),
-                  borderRadius: theme.shape.borderRadius,
-                  boxShadow: '0 5px 20px rgba(0, 0, 0, 0.1)',
-                  marginTop: -10,
-                  width: { xs: '50%', sm: '20%' },
-                  alignContent: 'center',
-                  marginBottom: theme.spacing(0.5),
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                  color: '#01a9ff',
-              }}
-              variant={isSmallScreen ? "h5" : "h4"}
-          >
-              Home
-          </Typography>
-      </Box>
+      <section className="page">
+        <ImageAccordion items={coolImages} />
+      </section>
 
-      <Box sx={{ marginBottom: theme.spacing(1), backgroundColor: "#fff" }}>
-          <Typography
-              variant="h4"
-              align="center"
-              sx={{
-                  fontWeight: 600,
-                  color: '#333',
-                  borderBottom: `2px solid #333`,
-                  paddingBottom: theme.spacing(1),
-              }}
-          >
-              Upcoming Events
-          </Typography>
-          
-      </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: theme.spacing(6) }}>
-      <Grid
-        container
-        spacing={isSmallScreen ? 2 : 4}
+      {/* Upcoming Events Section */}
+      <Box
         sx={{
-            marginTop: theme.spacing(2),
+          marginTop: theme.spacing(4),
+          marginBottom: theme.spacing(1),
+          backgroundColor: "#fff",
         }}
-    >
-          {eventData.map((item, index) => (
-            <Grid
-              item
-              xs={12}
-              md={6}
-              lg={4}
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                '&:hover': {
-                  transform: 'scale(1.03)',
-                  transition: 'transform 0.2s ease-in-out',
-                }
-              }}
-            >
-             <EventCard event={item} />  
-            </Grid>
+      >
+        <Typography
+          variant="h4"
+          align="center"
+          sx={{
+            fontWeight: 700,
+            color: '#333',
+            paddingBottom: theme.spacing(1),
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+          }}
+        >
+          Upcoming Events
+        </Typography>
+      </Box>
+
+      {/* Carousel for Upcoming Events */}
+      <Box sx={{ marginBottom: theme.spacing(6), borderRadius: "20px" }}>
+        <Slider {...carouselSettings}>
+          {eventData.map((event, index) => (
+            <Box key={index} sx={{ padding: theme.spacing(2) }}>
+              <EventCard event={event} />
+            </Box>
           ))}
-          </Grid>
-          { !isSmallScreen && 
-            <IconButton
-                sx={{
-                    backgroundColor: 'yellow',
-                    color: 'black',
-                    '&:hover': {
-                        backgroundColor: '#01a9ff',
-                        color: 'white',
-                        borderColor: 'white',
-                        transform: 'scale(1.1)',
-                        transition: 'transform 0.2s ease-in-out',
-                    },
-                    borderRadius: '50%',
-                    padding: '16px',
-                    marginRight: '16px',
-                    marginLeft: '16px',
-                }}
-                href='/events'
-            >
-                <ArrowForwardIos fontSize="large" />
-            </IconButton>
-           }
+        </Slider>
+      </Box>
+      {/* Carousel for Testimonials */}
+      <Box
+        sx={{
+          marginTop: theme.spacing(4),
+          backgroundColor: '#fff',
+          padding: theme.spacing(4),
+        }}
+      >
+        <Typography
+          variant="h4"
+          align="center"
+          sx={{
+            fontWeight: 700,
+            color: '#333',
+            paddingBottom: theme.spacing(1),
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+          }}
+        >
+          Hear From Our Community
+        </Typography>
+
+        <Box sx={{ marginBottom: theme.spacing(6), borderRadius: "20px" }}>
+          <Slider {...carouselSettings}>
+          {[1, 2, 3].map((_, index) => (
+            <Box key={index} sx={{ padding: theme.spacing(2), textAlign: 'center' }}>
+              <TestimonialCard />
+            </Box>
+          ))}
+          </Slider>
         </Box>
-
-        <Box sx={{ marginBottom: theme.spacing(1), backgroundColor: "#fff" }}>
-          <Typography
-              variant="h4"
-              align="center"
-              sx={{
-                  fontWeight: 600,
-                  color: '#333',
-                  borderBottom: `2px solid #333`,
-                  paddingBottom: theme.spacing(1),
-              }}
-          >
-              Featured Quizzes
-          </Typography>
-          
       </Box>
 
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: theme.spacing(4), backgroundColor: '#fff', marginRight: theme.spacing(2), marginLeft: theme.spacing(2) }}>
-          <Grid
-              container
-              spacing={isSmallScreen ? 2 : 4}
-              sx={{
-                  marginTop: theme.spacing(2),
-              }}
-              margin={theme.spacing(2)}
-          >
-              {[1, 2, 3].map((_, index) => (
-                <Grid
-                  key={index}
-                  item
-                  xs={12}
-                  md={4}
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    '&:hover': {
-                      transform: 'scale(1.03)',
-                      transition: 'transform 0.2s ease-in-out',
-                    },
-                    margin: theme.spacing(2),
-                    marginLeft: theme.spacing(-2),
-                  }}
-                >
-                  <TestimonialCard />
-                </Grid>
-              ))}
-          </Grid>
-      </Box>
-        
-        {/* Community Section */}
-        <Box sx={{ marginBottom: theme.spacing(1), backgroundColor: "#fff" }}>
-          <Typography
-              variant="h4"
-              align="center"
-              sx={{
-                  fontWeight: 600,
-                  color: '#333',
-                  borderBottom: `2px solid #333`,
-                  paddingBottom: theme.spacing(1),
-              }}
-          >
-              Hear From Our Community!
-          </Typography>
-      </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: theme.spacing(4), backgroundColor: '#fff', marginRight: theme.spacing(2), marginLeft: theme.spacing(2) }}>
-          <Grid
-              container
-              spacing={isSmallScreen ? 2 : 4}
-              sx={{
-                  marginTop: theme.spacing(2),
-              }}
-              margin={theme.spacing(2)}
-          >
-              {[1, 2, 3].map((_, index) => (
-                <Grid
-                  key={index}
-                  item
-                  xs={12}
-                  md={4}
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    '&:hover': {
-                      transform: 'scale(1.03)',
-                      transition: 'transform 0.2s ease-in-out',
-                    },
-                    margin: theme.spacing(2),
-                    marginLeft: theme.spacing(-2),
-                  }}
-                >
-                  <TestimonialCard />
-                </Grid>
-              ))}
-          </Grid>
-      </Box>
-      
-      
       <Footer />
-    
     </div>
-  )
-}
+  );
+};
+
+const NextArrow = ({ onClick }) => {
+  return (
+      <div
+          style={{
+              display: "block",
+              position: "absolute",
+              top: "50%",
+              right: "-25px",
+              transform: "translateY(-50%)",
+              zIndex: 1,
+              cursor: "pointer",
+              color: "white",
+          }}
+          onClick={onClick}
+      >
+          <ArrowForwardIos sx={{ fontSize: "30px", color: "#333" }} />
+      </div>
+  );
+};
+
+const PrevArrow = ({ onClick }) => {
+  return (
+      <div
+          style={{
+              display: "block",
+              position: "absolute",
+              top: "50%",
+              left: "-25px",
+              transform: "translateY(-50%)",
+              zIndex: 1,
+              cursor: "pointer",
+              color: "white",
+              ml: "10px",
+          }}
+          onClick={onClick}
+      >
+          <ArrowBackIos sx={{ ml: "8px", fontSize: "30px", color: "#333" }} />
+      </div>
+  );
+};
 
 export default Admin;
