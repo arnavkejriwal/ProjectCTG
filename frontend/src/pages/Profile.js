@@ -4,36 +4,177 @@ import Achievement, { achievements } from '../components/Achievement';
 import { useLogout } from '../hooks/useLogout';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
+import FeedbackCard from '../components/FeedbackCard';
+import FeedbackForm from '../components/FeedbackForm';
 
 function Profile() {
     const [selectedTab, setSelectedTab] = useState('achievements');
-    const {user} = useAuthContext();
+
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+
+    const [email, setEmail] = useState("");
+
+    const [name, setName] = useState("");
+
+    const [number, setNumber] = useState(0);
+
+    const [age, setAge] = useState("");
+
     
-    const handleTabChange = (e, v) => {
-        setSelectedTab(v);
-    };
-
-    const [email, setEmail] = useState(user.email);
-    const [name, setName] = useState(user.name);
-    const [number, setNumber] = useState(user.number);
-    const [age, setAge] = useState(user.age);
-
-    const handleSave = async (e) => {
-        e.preventDefault();
-    };
 
     const { logout } = useLogout();
+
     const navigate = useNavigate();
-    const handleLogout = () => {
-        logout();
-        navigate('/home');
+
+    const handleTabChange = (e, v) => {
+
+        setSelectedTab(v);
+
     };
 
-    const filteredAchievements = Object.keys(achievements)
-        .filter(key => achievements[key].enabled)
-        .map(key => (
-            <Achievement key={key} id={key} />
-        ));
+    const parseDate = (dateString) => {
+
+        const date = new Date(dateString);
+
+        const year = date.getFullYear();
+
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+
+        const day = String(date.getDate()).padStart(2, '0');
+
+        return `${year}-${month}-${day}`;
+
+    };
+
+    const [eventData, setEventData] = useState([]);
+
+    const getEvents = async () => {
+
+        try {
+
+            const response = await fetch('/api/events/get_events');
+
+            const json = await response.json();
+
+            setEventData(json);
+
+            // setBannerData(json); // Set banner data as the complete list of events
+
+        } catch (error) {
+
+            console.error("Error getting event data:", error);
+
+        }
+
+    };
+
+    useEffect(() => {
+
+        if (!eventData.length) {
+
+            getEvents();
+
+        }
+
+    }, [eventData]);
+
+    // Function to get user details by email
+
+    const getUserDetails = async () => {
+
+        try {
+
+            const response = await fetch(`/api/user/${user.email}`, {
+
+                method: 'GET',
+
+                headers: {
+
+                    'Content-Type': 'application/json',
+
+                },
+
+            });
+
+            if (!response.ok) {
+
+                throw new Error('Failed to fetch user details');
+
+            }
+
+            const data = await response.json();
+
+            setEmail(data.email);
+
+            setName(data.name);
+
+            setNumber(data.number);
+
+            setAge(parseDate(data.age));
+
+        } catch (error) {
+
+            console.error('Error:', error.message);
+
+        }
+
+    };
+
+    // Fetch user details on mount
+
+    useEffect(() => {
+
+        getUserDetails();
+
+    }, []); // Empty dependency array ensures this runs only once on mount
+
+    const handleSave = async (e) => {
+
+        e.preventDefault();
+
+        try {
+
+            const response = await fetch(`/api/user/${user.email}`, {
+
+                method: 'PATCH', // or 'PUT' based on your API
+
+                headers: {
+
+                    'Content-Type': 'application/json',
+
+                },
+
+                body: JSON.stringify({ email, name, number, age }),
+
+            });
+
+            if (!response.ok) {
+
+                throw new Error('Failed to update user details');
+
+            }
+
+            const data = await response.json();
+
+            console.log('User details updated:', data);
+
+        } catch (error) {
+
+            console.error('Error:', error.message);
+
+        }
+
+    };
+
+    const handleLogout = () => {
+
+        logout();
+
+        navigate('/home');
+
+    };
 
     let content;
     switch (selectedTab) {
@@ -68,11 +209,42 @@ function Profile() {
         )
         break;
     case 'events':
-        content = <></>;
+        if (isFeedbackOpen) {
+            <Box sx={{ mt: 2, width: { xs: '100%', sm: '60%' }, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', mx: 'auto' }}>
+                content = <FeedbackForm onClose={() => {setIsFeedbackOpen(false)}} />;
+            </Box>
+        } else {
+            content = 
+                <Grid container spacing={2} sx={{ mt: 2, width: { xs: '100%', sm: '60%' }, mx: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                    <Grid item xs={12}>
+                        <Typography variant="h4" sx={{ mb: 2, mt: 2 }}>Events joined as Volunteers</Typography>
+                    </Grid>
+                    {eventData.slice(0, 5).map((event, index) => (
+                        <Grid item xs={12} key={index}>
+                            <FeedbackCard
+                                event={event}
+                                onClick={() => setIsFeedbackOpen(true)}
+                            />
+                        </Grid>
+                    ))}
+                    <Grid item xs={12}>
+                        <Typography variant="h4" sx={{ mb: 2, mt: 2 }}>Events joined as Participants</Typography>
+                    </Grid>
+                    {eventData.slice(0, 8).map((event, index) => (
+                        <Grid item xs={12} key={index}>
+                            <FeedbackCard
+                                event={event}
+                                onClick={() => setIsFeedbackOpen(true)}
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
+            ;
+        }
         break;
     case 'info':
         content = (
-            <Box component="form" onSubmit={handleSave} sx={{ mt: 2, width: { xs: '100%', sm: '60%' }, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', mx: 'auto' }}>
+            <Box component="form" onSubmit={handleSave} sx={{ mt: 2, width: { xs: '100%', sm: '60%' }, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', mx: 'auto' }}>
                 <TextField
                     label="Email address"
                     type="email"
@@ -102,12 +274,13 @@ function Profile() {
                     label="Age"
                     type="date"
                     fullWidth
+                    disabled
                     margin="normal"
                     InputLabelProps={{ shrink: true }}
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
                 />
-                <Box sx={{ mt: 5, width:'100%', display: 'flex', flexDirection:'row', justifyContent:'space-between' }}>
+                <Box sx={{ mt: 5, width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Button variant="contained" color="error" sx={{ mt: 2 }} onClick={handleLogout}>
                         Log Out
                     </Button>
@@ -116,7 +289,7 @@ function Profile() {
                     </Button>
                 </Box>
             </Box>
-        )
+        );
         break;
     default:
         content = null;
@@ -165,6 +338,62 @@ function Profile() {
                 >
                     2750 PTS
                 </Typography>
+                <Box sx={{display:'flex', 
+                    flexDirection:'row',
+                    alignItems:'center',
+                    justifyContent:'center',
+                    position:'absolute',
+                    bottom: 10,
+                    right: 5}}>
+                        <Box sx={{
+                            backgroundColor: 'transparent',
+                            backgroundImage: `url("/badges/Badge1.png")`,
+                            backgroundSize: 'contain',
+                            backgroundPosition: 'center',
+                            width: {xs: 30, sm: 40, md: 50},
+                            height: 60,
+                            position: 'relative',
+                            backgroundRepeat: 'no-repeat',
+                            mr:'2px'
+                            }}>
+                        </Box>
+                        <Box sx={{
+                            backgroundColor: 'transparent',
+                            backgroundImage: `url("/badges/Badge6.png")`,
+                            backgroundSize: 'contain',
+                            backgroundPosition: 'center',
+                            width: {xs: 30, sm: 40, md: 50},
+                            height: 60,
+                            position: 'relative',
+                            backgroundRepeat: 'no-repeat',
+                            mr:'2px'
+                            }}>
+                        </Box>
+                        <Box sx={{
+                            backgroundColor: 'transparent',
+                            backgroundImage: `url("/badges/Badge3.png")`,
+                            backgroundSize: 'contain',
+                            backgroundPosition: 'center',
+                            width: {xs: 30, sm: 40, md: 50},
+                            height: 60,
+                            position: 'relative',
+                            backgroundRepeat: 'no-repeat'
+                            }}>
+                        </Box>
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                position: 'relative',
+                                textAlign: 'right',
+                                color: 'grey',
+                                mr: 3,
+                                ml: 1,
+                                fontWeight: 'bold'
+                            }}
+                        >
+                            +1
+                        </Typography>
+                </Box>
                 <Box sx={{
                     boxShadow: 4,
                     borderRadius: '50%',
@@ -206,7 +435,7 @@ function Profile() {
                         fontWeight: 'bold',
                     }}
                 >
-                    John Doe
+                    {name}
                 </Typography>
                 <Typography
                     variant="body1"
