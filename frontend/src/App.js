@@ -11,6 +11,7 @@ import Profile from './pages/Profile'
 import Admin from './pages/Admin'
 import Quizzes from './pages/Quizzes'
 import TrainingPage from './pages/Training'
+import AdminDashboard from './pages/AdminDashboard'
 
 function App() {
   const { user } = useAuthContext()
@@ -56,6 +57,10 @@ function App() {
             <Route
               path="/training"
               element={<TrainingPage/>}
+            />
+            <Route
+              path="/insights"
+              element={<AdminDashboard/>}
             />
           </Routes>
         </div>

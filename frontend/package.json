@@ -9,6 +9,7 @@
     "@fontsource/poppins": "^5.0.15",
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
+    "@mui/x-charts": "^7.14.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -22,6 +23,7 @@
     "swiper": "^11.1.10",
     "react-split": "^2.0.14",
     "slick-carousel": "^1.8.1",
+    "swiper": "^11.1.10",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

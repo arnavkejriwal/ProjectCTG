@@ -31,6 +31,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import BookIcon from '@mui/icons-material/Book';
+import BarChartIcon from '@mui/icons-material/BarChart';
 
 const Navbar = () => {
   const { user } = useAuthContext();
@@ -55,7 +56,8 @@ const Navbar = () => {
     { text: 'Events', icon: <EventIcon />, link: '/events' },
     { text: 'Quizzes', icon: <EmojiEventsIcon />, link: '/quizzes' },
     {text: 'Training', icon: <BookIcon />, link: '/training'},
-    { text: 'Admin', icon: <AdminPanelSettingsIcon />, link: '/' },
+    { text: 'Manage', icon: <AdminPanelSettingsIcon />, link: '/' },
+    { text: 'Insights', icon: <BarChartIcon />, link: '/insights' },
   ];
 
   return (
