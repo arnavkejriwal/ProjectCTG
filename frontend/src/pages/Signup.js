@@ -11,12 +11,13 @@ const Signup = () => {
   const [isAdmin, setIsAdmin] = useState(false)
   const [skills, setSkills] = useState([])
   const [eventsParticipated, setEventsParticipated] = useState([])
+  const [pointsBalance, setPointsBalance] = useState(0)
   const {signup, error, isLoading} = useSignup()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    await signup(email, password, name, number, age, isAdmin, skills, eventsParticipated)
+    await signup(email, password, name, number, age, isAdmin, skills, eventsParticipated, pointsBalance)
   }
 
   return (

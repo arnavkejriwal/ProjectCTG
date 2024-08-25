@@ -34,11 +34,14 @@ const userSchema = new Schema({
   },
   eventsParticipated:{
     type: Array,
+  },
+  pointsBalance:{
+    type: Number,
   }
 })
 
 // static signup method
-userSchema.statics.signup = async function(email, password, name, number, age, isAdmin, skills, eventsParticipated) {
+userSchema.statics.signup = async function(email, password, name, number, age, isAdmin, skills, eventsParticipated, pointsBalance) {
 
   // validation
   if (!email || !password || !name || !number) {
@@ -66,7 +69,7 @@ userSchema.statics.signup = async function(email, password, name, number, age, i
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
 
-  const user = await this.create({ email, password: hash, name, number, age, isAdmin, skills, eventsParticipated })
+  const user = await this.create({ email, password: hash, name, number, age, isAdmin, skills, eventsParticipated, pointsBalance })
 
   return user
 }
