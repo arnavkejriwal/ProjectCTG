@@ -12,6 +12,8 @@ import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIos from '@mui/icons-material/ArrowBackIos';
 import { InputAdornment, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import Footer from "../components/Footer";
+import { ImageAccordion } from "../components/ImageAccordion";
 
 const parseDate = (dateStr) => {
     const [day, month, year] = dateStr.split('/').map(Number);
@@ -26,15 +28,35 @@ const Event = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedMonth, setSelectedMonth] = useState("All");
     const [selectedDestination, setSelectedDestination] = useState("All");
+    // const [bannerData, setBannerData] = useState([]);
 
     const monthOptions = ["All", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const destinationOptions = ["All", "Tung Chung", "Kowloon", "Stadium", "Park"];
+
+    const coolImages = [
+        {
+          header: "Zubin Annual Fundraising Dinner",
+          image: "https://www.zubinfoundation.org/wp-content/uploads/2023/05/3.jpg",
+          text: `Image description`,
+        },
+        {
+          header: "Mental Health Awareness",
+          image: "https://images.unsplash.com/photo-1593113616828-6f22bca04804?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          text: `Image description`,
+        },
+        {
+          header: "Health Camp",
+          image: "https://images.unsplash.com/photo-1643321612557-57cef422f401?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          text: `Image description`,
+        },
+      ];
 
     const getEvents = async () => {
         try {
             const response = await fetch('/api/events/get_events');
             const json = await response.json();
             setEventData(json);
+            // setBannerData(json); // Set banner data as the complete list of events
         } catch (error) {
             console.error("Error getting event data:", error);
         }
@@ -46,6 +68,7 @@ const Event = () => {
         }
     }, [eventData]);
 
+    // Filtering the events for the event cards grid
     const filteredEvents = eventData
         .filter(event => {
             const eventDate = parseDate(event.date);
@@ -62,34 +85,35 @@ const Event = () => {
         })
         .sort((a, b) => parseDate(a.date) - parseDate(b.date));
 
+
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [eventDetailsOpen, setEventDetailsOpen] = useState(false);
 
     // Settings for the carousel using react-slick
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 1000,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true, // Enable autoplay
-        autoplaySpeed: 5000, // Change slide every 5 seconds
-        arrows: true,
-        nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow />,
-        dotsClass: "slick-dots custom-dots", 
-        appendDots: (dots) => (
-            <div
-                style={{
-                    position: 'relative',
-                    bottom: '30px',
-                    color: 'white'
-                }}
-            >
-                <ul style={{ margin: "0px", padding: "0", color: "white" }}> {dots} </ul>
-            </div>
-        ),
-    };
+    // const settings = {
+    //     dots: true,
+    //     infinite: true,
+    //     speed: 1000,
+    //     slidesToShow: 1,
+    //     slidesToScroll: 1,
+    //     autoplay: true, // Enable autoplay
+    //     autoplaySpeed: 5000, // Change slide every 5 seconds
+    //     arrows: true,
+    //     nextArrow: isSmallScreen ? null : <NextArrow />,
+    //     prevArrow: isSmallScreen ? null : <PrevArrow />,
+    //     dotsClass: "slick-dots custom-dots", 
+    //     appendDots: (dots) => (
+    //         <div
+    //             style={{
+    //                 position: 'relative',
+    //                 bottom: '30px',
+    //                 color: 'white'
+    //             }}
+    //         >
+    //             <ul style={{ margin: "0px", padding: "0", color: "white" }}> {dots} </ul>
+    //         </div>
+    //     ),
+    // };
     
     
 
@@ -99,18 +123,9 @@ const Event = () => {
                 <EventDetails event={selectedEvent} onClose={() => { setEventDetailsOpen(false); setSelectedEvent(null); }} />
             ) : (
                 <>
-                    {/* Carousel Section */}
-                    <Box sx={{ marginBottom: theme.spacing(6), borderRadius: "20px" }}>
-                        <Slider {...settings}>
-                            {filteredEvents.slice(0, 5).map((event, index) => (
-                                <Box key={index} > 
-                                    <EventBanner
-                                        event={event}
-                                        onClick={() => { setSelectedEvent(event); setEventDetailsOpen(true); }}
-                                    />
-                                </Box>
-                            ))}
-                        </Slider>
+                    {/* Hero Section*/}
+                    <Box className="page" sx={{ backgroundColor: 'white', paddingBottom: theme.spacing(4) }}>
+                        <ImageAccordion items={coolImages} />
                     </Box>
 
                     {/* Search and Filter Section */}
@@ -206,6 +221,7 @@ const Event = () => {
                         spacing={isSmallScreen ? 2 : 4}
                         sx={{
                             marginTop: theme.spacing(2),
+                            paddingBottom: theme.spacing(8),
                         }}
                     >
                         {filteredEvents.map((event, index) => (
@@ -232,51 +248,52 @@ const Event = () => {
                             </Grid>
                         ))}
                     </Grid>
+                    <Footer />
                 </>
             )}
         </Box>
     );
 }
 
-const NextArrow = ({ onClick }) => {
-    return (
-        <div
-            style={{
-                display: "block",
-                position: "absolute",
-                top: "50%",
-                right: "-25px",
-                transform: "translateY(-50%)",
-                zIndex: 1,
-                cursor: "pointer",
-                color: "white",
-            }}
-            onClick={onClick}
-        >
-            <ArrowForwardIos sx={{ fontSize: "30px", color: "#333" }} />
-        </div>
-    );
-};
+// const NextArrow = ({ onClick }) => {
+//     return (
+//         <div
+//             style={{
+//                 display: "block",
+//                 position: "absolute",
+//                 top: "50%",
+//                 right: "-25px",
+//                 transform: "translateY(-50%)",
+//                 zIndex: 1,
+//                 cursor: "pointer",
+//                 color: "white",
+//             }}
+//             onClick={onClick}
+//         >
+//             <ArrowForwardIos sx={{ fontSize: "30px", color: "#333" }} />
+//         </div>
+//     );
+// };
 
-const PrevArrow = ({ onClick }) => {
-    return (
-        <div
-            style={{
-                display: "block",
-                position: "absolute",
-                top: "50%",
-                left: "-25px",
-                transform: "translateY(-50%)",
-                zIndex: 1,
-                cursor: "pointer",
-                color: "white",
-                ml: "10px",
-            }}
-            onClick={onClick}
-        >
-            <ArrowBackIos sx={{ ml: "8px", fontSize: "30px", color: "#333" }} />
-        </div>
-    );
-};
+// const PrevArrow = ({ onClick }) => {
+//     return (
+//         <div
+//             style={{
+//                 display: "block",
+//                 position: "absolute",
+//                 top: "50%",
+//                 left: "-25px",
+//                 transform: "translateY(-50%)",
+//                 zIndex: 1,
+//                 cursor: "pointer",
+//                 color: "white",
+//                 ml: "10px",
+//             }}
+//             onClick={onClick}
+//         >
+//             <ArrowBackIos sx={{ ml: "8px", fontSize: "30px", color: "#333" }} />
+//         </div>
+//     );
+// };
 
 export default Event;

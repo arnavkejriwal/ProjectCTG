@@ -11,6 +11,7 @@ import {
   Grid,
 } from '@mui/material';
 import Quiz from '../components/Quiz';
+import Footer from '../components/Footer';
 
 const quizzes = {
   "Mental Health Camp Training": {
@@ -97,6 +98,8 @@ const TrainingPage = () => {
           Quiz closed successfully!
         </Alert>
       </Snackbar>
+      <Box sx={{ paddingBottom: 8 }} />
+      <Footer />
     </Container>
   );
 };

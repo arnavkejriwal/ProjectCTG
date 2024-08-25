@@ -164,6 +164,12 @@ form.signup, form.login {
   transition: 0.5s;
 }
 
+@media (max-width: 768px) {
+  .image-accordion-item {
+    width: 24px;
+  }
+}
+
 .image-accordion-item:hover {
   opacity: 0.75;
 }

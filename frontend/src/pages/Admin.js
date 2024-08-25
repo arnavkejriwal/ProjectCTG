@@ -1,34 +1,54 @@
 import { useEffect, useState } from 'react';
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
-import { useAuthContext } from "../hooks/useAuthContext";
 import { useTheme } from '@mui/material/styles';
-import { Box, Typography, Grid, IconButton } from '@mui/material';
+import { Box, Typography} from '@mui/material';
 import { ArrowForwardIos } from '@mui/icons-material';
 import EventCard from '../components/EventCard';
 import TestimonialCard from '../components/TestimonialCard';
-import Footer from '../components/Footer';
-import { ImageAccordion } from '../components/ImageAccordion';
 import Slider from "react-slick"; // Carousel library
 import {useMediaQuery} from '@mui/material';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ArrowBackIos} from "@mui/icons-material";
+import Footer from "../components/Footer";
+import EventDetails from "../components/EventDetails";
+import EventBanner from '../components/EventBanner';
 
 const Admin = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [eventData, setEventData] = useState([]);
-
+  const [bannerData, setBannerData] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [eventDetailsOpen, setEventDetailsOpen] = useState(false);
+  
   const getEvents = async () => {
     try {
       const response = await fetch('/api/events/get_events');
       const json = await response.json();
       const closestEvents = filterClosestEvents(json);
       setEventData(closestEvents);
+      setBannerData(closestEvents);
     } catch (error) {
       console.error("Error getting event data:", error);
     }
   };
+
+  useEffect(() => {
+    if (!eventData.length) {
+        getEvents();
+    }
+});
+
+// Filtering the events for the event cards grid
+// const filteredEvents = bannerData
+//     .filter(event => {
+//         const eventDate = parseDate(event.date);
+//         const today = new Date();
+//         return eventDate >= today;
+//     })
+//     .sort((a, b) => parseDate(a.date) - parseDate(b.date));
+
+
 
   const filterClosestEvents = (events) => {
     const sortedEvents = events
@@ -37,7 +57,7 @@ const Admin = () => {
         parsedDate: parseDate(event.date),
       }))
       .sort((a, b) => a.parsedDate - b.parsedDate);
-    return sortedEvents.slice(0, 3);
+    return sortedEvents.slice(0, 5);
   };
 
   const parseDate = (dateString) => {
@@ -51,23 +71,30 @@ const Admin = () => {
     }
   });
 
-  const coolImages = [
-    {
-      header: "Zubin Annual Fundraising Dinner",
-      image: "https://www.zubinfoundation.org/wp-content/uploads/2023/05/3.jpg",
-      text: `Image description`,
-    },
-    {
-      header: "Mental Health Awareness",
-      image: "https://images.unsplash.com/photo-1593113616828-6f22bca04804?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      text: `Image description`,
-    },
-    {
-      header: "Health Camp",
-      image: "https://images.unsplash.com/photo-1643321612557-57cef422f401?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      text: `Image description`,
-    },
-  ];
+  const settings = {
+      dots: true,
+      infinite: true,
+      speed: 1000,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true, // Enable autoplay
+      autoplaySpeed: 5000, // Change slide every 5 seconds
+      arrows: true,
+      nextArrow: isSmallScreen ? null : <NextArrow />,
+      prevArrow: isSmallScreen ? null : <PrevArrow />,
+      dotsClass: "slick-dots custom-dots", 
+      appendDots: (dots) => (
+          <div
+              style={{
+                  position: 'relative',
+                  bottom: '30px',
+                  color: 'white'
+              }}
+          >
+              <ul style={{ margin: "0px", padding: "0", color: "white" }}> {dots} </ul>
+          </div>
+      ),
+  };
 
 
   const carouselSettings = {
@@ -79,8 +106,8 @@ const Admin = () => {
     autoplay: true, // Enable autoplay
     autoplaySpeed: 5000, // Change slide every 5 seconds
     arrows: true,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    nextArrow: isSmallScreen ? null : <NextArrow />,
+    prevArrow: isSmallScreen ? null : <PrevArrow />,
     dotsClass: "slick-dots custom-dots", 
     responsive: [
       {
@@ -104,10 +131,22 @@ const Admin = () => {
 
   return (
     <div>
-      <section className="page">
-        <ImageAccordion items={coolImages} />
-      </section>
-
+      {eventDetailsOpen ? (
+                <EventDetails event={selectedEvent} onClose={() => { setEventDetailsOpen(false); setSelectedEvent(null); }} />
+            ) : (
+      <>
+      <Box sx={{ marginBottom: theme.spacing(6), borderRadius: "20px" }}>
+          <Slider {...settings}>
+              {bannerData.slice(0, 5).map((event, index) => ( // Use bannerData directly for slider
+                  <Box key={index}> 
+                      <EventBanner
+                          event={event}
+                          onClick={() => { setSelectedEvent(event); setEventDetailsOpen(true); }}
+                      />
+                  </Box>
+              ))}
+          </Slider>
+      </Box>
       {/* Upcoming Events Section */}
       <Box
         sx={{
@@ -135,7 +174,7 @@ const Admin = () => {
       <Box sx={{ marginBottom: theme.spacing(6), borderRadius: "20px" }}>
         <Slider {...carouselSettings}>
           {eventData.map((event, index) => (
-            <Box key={index} sx={{ padding: theme.spacing(2) }}>
+            <Box key={index} onClick={() => { setSelectedEvent(event); setEventDetailsOpen(true); }}>
               <EventCard event={event} />
             </Box>
           ))}
@@ -166,15 +205,16 @@ const Admin = () => {
         <Box sx={{ marginBottom: theme.spacing(6), borderRadius: "20px" }}>
           <Slider {...carouselSettings}>
           {[1, 2, 3].map((_, index) => (
-            <Box key={index} sx={{ padding: theme.spacing(2), textAlign: 'center' }}>
+            <Box key={index} sx={{ textAlign: 'center' }}>
               <TestimonialCard />
             </Box>
           ))}
           </Slider>
         </Box>
       </Box>
-
       <Footer />
+      </>
+    )}
     </div>
   );
 };

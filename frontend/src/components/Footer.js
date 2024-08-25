@@ -13,18 +13,6 @@ const Footer = () => {
                 borderTop: '1px solid #ddd',
             }}
         >
-              <Box
-                component="img"
-                src="https://cdn.prod.website-files.com/5dbfd0c08b3107b843917e24/6017ba951aa635c7c910d37e_Zubin%20Logo.png"
-                alt="zubin"
-                sx={{
-                  width: 75,
-                  height: 75,
-                  borderRadius: '50%',
-                  objectFit: 'cover',
-                  marginRight: '10px',
-                }}
-              />
             <Typography variant="body2" sx={{ marginTop: 1 }}>
                 Follow us on:
             </Typography>

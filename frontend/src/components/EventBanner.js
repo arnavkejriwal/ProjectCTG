@@ -3,9 +3,11 @@ import { Box, Typography, Button, Grid } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PlaceIcon from '@mui/icons-material/Place';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import {useMediaQuery} from '@mui/material';
 
 
 export default function EventBanner({ event, onClick }) {
+    const isMobile = useMediaQuery('(max-width: 500px)');
     return (
         <Box
             sx={{
@@ -49,14 +51,14 @@ export default function EventBanner({ event, onClick }) {
                 spacing={4}
             >
                 <Grid item xs={12} md={6}>
-                    <Typography variant="h3" fontWeight="bold" sx={{ mb: 1 }}>
+                    <Typography variant={isMobile ? "h4" : "h3"} fontWeight="bold" sx={{ mb: 1 }}>
                         {event.title}
                     </Typography>
-                    <Typography variant="h6" sx={{ mb: 2 }}>
+                    <Typography variant={isMobile ? "body1" : "h6"} sx={{ fontWeight: isMobile ? "bold" : "normal", mb: 2 }}>
                         {event.subtitle}
                     </Typography>
                     <Typography
-                        variant="body1"
+                        variant={isMobile ? "body2" : "body1"}
                         sx={{
                             display: 'flex',
                             alignItems: 'center',
