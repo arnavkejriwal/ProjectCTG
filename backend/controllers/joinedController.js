@@ -2,19 +2,20 @@ const Joined = require('../models/joinedModel');
 
 /**
  * Save event IDs joined by a user.
- * @param {Object} req - Express request object containing userId and eventId.
+ * @param {Object} req - Express request object containing email, eventId, and role.
  * @param {Object} res - Express response object.
  */
 const save_event_ids_joined_by_user = async (req, res) => {
-    const { userId, eventId } = req.body;
+    const { email, eventId, role } = req.body;
 
     try {
         const joinedEntry = new Joined({
-            userId,
+            email,
             eventId,
+            role,  // Save role along with email and eventId
         });
 
-        await joinedEntry.save();
+        await Joined.create(joinedEntry);
         res.status(201).json({ message: 'Event successfully joined by user', joinedEntry });
     } catch (err) {
         res.status(500).json({ error: 'Failed to save joined event', details: err.message });
@@ -22,17 +23,22 @@ const save_event_ids_joined_by_user = async (req, res) => {
 };
 
 /**
- * Get all event IDs joined by a user.
- * @param {Object} req - Express request object containing userId.
+ * Get all event IDs joined by a user using their email.
+ * @param {Object} req - Express request object containing email.
  * @param {Object} res - Express response object.
  */
-const get_event_ids_by_user_id = async (req, res) => {
-    const { userId } = req.params;
+const get_event_ids_by_user_email = async (req, res) => {
+    const { email } = req.params;
 
     try {
-        const events = await Joined.find({ userId }).populate('eventId', '_id name date');
+        const events = await Joined.find({ email }).populate('eventId', '_id name date role');
 
-        res.status(200).json(events.map(event => event.eventId));
+        res.status(200).json(events.map(event => ({
+            eventId: event.eventId._id,
+            eventName: event.eventId.name,
+            eventDate: event.eventId.date,
+            role: event.role,  // Include the role in the response
+        })));
     } catch (err) {
         res.status(500).json({ error: 'Failed to retrieve events for user', details: err.message });
     }
@@ -40,5 +46,5 @@ const get_event_ids_by_user_id = async (req, res) => {
 
 module.exports = {
     save_event_ids_joined_by_user,
-    get_event_ids_by_user_id,
+    get_event_ids_by_user_email,
 };

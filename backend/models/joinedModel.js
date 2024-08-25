@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
 const joinedSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    email: { type: String, required: true }, 
     eventId: { type: mongoose.Schema.Types.ObjectId, ref: 'Event', required: true },
-    joinedAt: { type: Date, default: Date.now }
+    joinedAt: { type: Date, default: Date.now },
+    role: { type: String, enum: ['Volunteer', 'Participant'], default: 'Participant' },
 });
 
-const Joined = mongoose.model('Joined', joinedSchema);
+const Joined = mongoose.model('joined', joinedSchema);
 
 module.exports = Joined;

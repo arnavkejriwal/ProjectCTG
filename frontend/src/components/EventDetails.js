@@ -4,8 +4,39 @@ import PlaceIcon from '@mui/icons-material/Place';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ArrowBack from '@mui/icons-material/ArrowBack';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 export default function EventPage({ event, onClose }) { 
+
+    const { user } = useAuthContext();
+
+    // Function to handle joining the event
+    const handleJoin = async (role) => {
+        console.log('Joining event:', event._id, 'as a', role, " - User:", user.email); // Updated log to use email
+        try {
+            const response = await fetch('/api/joined/join', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: user.email,  // The current user's email
+                    eventId: event._id,  // The event's ID
+                    role: role  // Either "Volunteer" or "Participant" based on the button clicked
+                }),
+            });
+
+            if (response.status === 201) {
+                alert('Successfully joined the event as a ' + role);
+            } else {
+                alert('Failed to join the event.');
+            }
+        } catch (error) {
+            console.error('Error joining event:', error);
+            alert('An error occurred while trying to join the event.');
+        }
+    };
+
     return (
         <Box 
             sx={{
@@ -150,8 +181,19 @@ export default function EventPage({ event, onClose }) {
                             mt: { xs: 5, sm: 4, md: 0 },
                         }}
                     >
-                        <Button variant="contained" color="secondary">Join as a Volunteer</Button>
-                        <Button variant="contained">Join as a Participant</Button>
+                        <Button 
+                            variant="contained" 
+                            color="secondary" 
+                            onClick={() => handleJoin('Volunteer')} // Handle Join as Volunteer
+                        >
+                            Join as a Volunteer
+                        </Button>
+                        <Button 
+                            variant="contained" 
+                            onClick={() => handleJoin('Participant')} // Handle Join as Participant
+                        >
+                            Join as a Participant
+                        </Button>
                     </Box>
                 </Box>
                 <Box>
