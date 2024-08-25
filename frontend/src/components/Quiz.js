@@ -43,7 +43,7 @@ const Quiz = ({ quiz, onClose }) => {
                   color: isSelected ? 'white' : 'black',
                   borderColor: isIncorrect ? 'red' : 'default',
                   ...(isIncorrect && { bgcolor: 'rgba(255, 0, 0, 0.1)' }), // Light red background for wrong answers
-                  ...(submitted && isCorrect && { borderColor: 'green' }) // Green border for correct answers
+                  ...(submitted && isCorrect) // Green border for correct answers
                 }}
               >
                 {option}
