@@ -102,12 +102,12 @@ const QuizzesPage = () => {
 
   return (
   <Container>
-    <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'center', my: 2 }}>
-      Quizzes
+    <Typography variant="h3" gutterBottom align="center" sx={{ fontWeight: 'bold', color: '#01a9ff', my: 4 }}>
+        Quizzes
     </Typography>
     
     {/* Cantonese Quizzes Section */}
-    <Typography variant="h5" sx={{ my: 4 }}>Cantonese Quizzes</Typography>
+    <Typography variant="h5" sx={{ my: 4 }} fontWeight={'bold'}>Cantonese Quizzes</Typography>
     {Object.entries(quizzes).filter(([title]) => title.includes("Cantonese")).map(([title, { description, image, questions }]) => (
       <Paper key={title} elevation={3} sx={{ mb: 4, p: 3, borderRadius: 2 }}>
         <Typography variant="h6" gutterBottom>{title}</Typography>
@@ -124,7 +124,7 @@ const QuizzesPage = () => {
     ))}
 
     {/* Mental Health Quizzes Section */}
-    <Typography variant="h5" sx={{ my: 4 }}>Mental Health Questionnaires</Typography>
+    <Typography variant="h5" sx={{ my: 4 }} fontWeight={'bold'}>Mental Health Questionnaires</Typography>
 
     <Modal open={Boolean(openQuiz)} onClose={handleClose}>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>

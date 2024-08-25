@@ -52,9 +52,8 @@ const Navbar = () => {
   const menuItems = [
     { text: 'Home', icon: <HomeIcon />, link: '/home' },
     { text: 'Events', icon: <EventIcon />, link: '/events' },
-    { text: 'Achievements', icon: <EmojiEventsIcon />, link: '/achievements' },
+    { text: 'Quizzes', icon: <EmojiEventsIcon />, link: '/quizzes' },
     {text: 'Training', icon: <BookIcon />, link: '/training'},
-    { text: 'Chatbot', icon: <ChatIcon />, link: '/chatbot' },
     { text: 'Admin', icon: <AdminPanelSettingsIcon />, link: '/' },
   ];
 
@@ -166,7 +165,7 @@ const Navbar = () => {
               fontFamily: 'Arial, sans-serif',
               fontWeight: 600,
               fontSize: '1.5rem',
-              display: 'flex', 
+              display: 'flex',
               flexDirection: 'column',
               alignItems: 'flex-start',
             }}
