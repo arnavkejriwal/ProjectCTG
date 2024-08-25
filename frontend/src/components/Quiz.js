@@ -22,7 +22,7 @@ const Quiz = ({ quiz, onClose }) => {
 
   return (
     <Box sx={{ bgcolor: 'background.paper', p: 3, borderRadius: 2, width: '400px' }}>
-      <Typography variant="h5">Quiz</Typography>
+      <Typography variant="h5" sx={{ mb: 2 }}>Quiz</Typography>
       
       {quiz.map((q, index) => (
         <Box key={index} mb={2}>
