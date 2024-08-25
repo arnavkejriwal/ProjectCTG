@@ -13,7 +13,7 @@ const WorkoutForm = ({ selectedWorkout, setSelectedWorkout }) => {
   const [image, setImage] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
-  const [eventId, setEventId] = useState(0);
+  // const [eventId, setEventId] = useState(0);
   const [time, setTime] = useState("");
   const [points, setPoints] = useState(0);
   const [bannerImg, setBannerImg] = useState("");
@@ -22,6 +22,7 @@ const WorkoutForm = ({ selectedWorkout, setSelectedWorkout }) => {
   const [organiserImg, setOrganiserImg] = useState("");
   const [participantVacancies, setParticipantVacancies] = useState(0);
   const [volunteerVacancies, setVolunteerVacancies] = useState(0);
+  const [ageRange, setAgeRange] = useState("");
 
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
@@ -35,7 +36,7 @@ const WorkoutForm = ({ selectedWorkout, setSelectedWorkout }) => {
       setImage(selectedWorkout.image || "");
       setDate(selectedWorkout.date || "");
       setLocation(selectedWorkout.location || "");
-      setEventId(selectedWorkout.event_id || 0);
+      // setEventId(selectedWorkout.event_id || 0);
       setTime(selectedWorkout.time || "");
       setPoints(selectedWorkout.points || 0);
       setBannerImg(selectedWorkout.banner_img || "");
@@ -44,6 +45,7 @@ const WorkoutForm = ({ selectedWorkout, setSelectedWorkout }) => {
       setOrganiserImg(selectedWorkout.organiser_img || "");
       setParticipantVacancies(selectedWorkout.participant_vacancies || 0);
       setVolunteerVacancies(selectedWorkout.volunteer_vacancies || 0);
+      setAgeRange(selectedWorkout.age_range || "");
       setIsUpdateMode(true);
     } else {
       resetForm();
@@ -58,7 +60,7 @@ const WorkoutForm = ({ selectedWorkout, setSelectedWorkout }) => {
     setImage("");
     setDate("");
     setLocation("");
-    setEventId(0);
+    // setEventId(0);
     setTime("");
     setPoints(0);
     setBannerImg("");
@@ -69,6 +71,7 @@ const WorkoutForm = ({ selectedWorkout, setSelectedWorkout }) => {
     setVolunteerVacancies(0);
     setError(null);
     setEmptyFields([]);
+    setAgeRange("");
   };
 
   const handleSubmit = async (e) => {
@@ -86,13 +89,14 @@ const WorkoutForm = ({ selectedWorkout, setSelectedWorkout }) => {
       image,
       date,
       location,
-      event_id: eventId,
+      // event_id: eventId,
       banner_img: bannerImg,
       description,
       organiser,
       organiser_img: organiserImg,
       participant_vacancies: participantVacancies,
       volunteer_vacancies: volunteerVacancies,
+      age_range: ageRange,
     };
 
     const response = await fetch(
@@ -217,7 +221,7 @@ const WorkoutForm = ({ selectedWorkout, setSelectedWorkout }) => {
           />
         </Grid>
 
-        <Grid item xs={12} sm={6}>
+        {/* <Grid item xs={12} sm={6}>
           <TextField
             label="Event ID"
             fullWidth
@@ -226,6 +230,17 @@ const WorkoutForm = ({ selectedWorkout, setSelectedWorkout }) => {
             value={eventId}
             onChange={(e) => setEventId(e.target.value)}
             error={emptyFields.includes("eventId")}
+          />
+        </Grid> */}
+
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Age Range"
+            fullWidth
+            variant="outlined"
+            value={ageRange}
+            onChange={(e) => setAgeRange(e.target.value)}
+            error={emptyFields.includes("ageRange")}
           />
         </Grid>
 

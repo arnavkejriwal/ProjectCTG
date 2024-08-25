@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const eventSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    event_id: Number,
+    // event_id: Number,
     emoji: String,
     title: String,
     image: String,
@@ -16,7 +16,8 @@ const eventSchema = new mongoose.Schema({
     organiser_img:String,
     banner_img:String,
     volunteer_vacancies: Number,
-    participant_vacancies:Number
+    participant_vacancies:Number,
+    age_range:String
 }, { collection: 'events', versionKey: false });
 
 
