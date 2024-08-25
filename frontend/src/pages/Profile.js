@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Grid, Box, Typography, LinearProgress, Tabs, Tab, TextField, Button } from '@mui/material'
 import Achievement from '../components/Achievement';
+import { useLogout } from '../hooks/useLogout';
 
 function Profile() {
     const [selectedTab, setSelectedTab] = useState('achievements');

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import {
   AppBar,
@@ -32,7 +31,6 @@ import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 const Navbar = () => {
-  const { logout } = useLogout();
   const { user } = useAuthContext();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -46,22 +44,8 @@ const Navbar = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleProfileMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleProfileClick = () => {
-    handleProfileMenuClose();
+  const handleProfileMenuOpen = () => {
     navigate('/profile');
-  };
-
-  const handleLogout = () => {
-    logout();
-    handleProfileMenuClose();
   };
 
   const menuItems = [
@@ -154,25 +138,10 @@ const Navbar = () => {
                 Signup
               </Button>
             </Box>
-          )}
-
-          {/* Profile Menu */}
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleProfileMenuClose}
-          >
-            <MenuItem onClick={handleProfileClick}>
-              <PersonIcon sx={{ marginRight: 1 }} /> Profile
-            </MenuItem>
-            <MenuItem onClick={handleLogout}>
-              <LogoutIcon sx={{ marginRight: 1 }} /> Logout
-            </MenuItem>
-          </Menu>
+          )}          
         </Toolbar>
       </AppBar>
 
-      {/* Drawer for Menu */}
       <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle}>
         <Box
           sx={{
