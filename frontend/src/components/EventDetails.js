@@ -5,14 +5,28 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { useState } from 'react';
+import JoinedSnackbar from './JoinedSnackbar';
+
 
 export default function EventPage({ event, onClose }) { 
 
     const { user } = useAuthContext();
 
+
+    const [snackbar, setSnackbar] = useState({
+        open: false,
+        message: '',
+        severity: 'success',
+    });
+
+    const handleClose = () => {
+        setSnackbar({ ...snackbar, open: false });
+    };
+
     // Function to handle joining the event
     const handleJoin = async (role) => {
-        console.log('Joining event:', event._id, 'as a', role, " - User:", user.email); // Updated log to use email
+        console.log('Joining event:', event._id, 'as a', role, " - User:", user.email); 
         try {
             const response = await fetch('/api/joined/join', {
                 method: 'POST',
@@ -20,16 +34,30 @@ export default function EventPage({ event, onClose }) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: user.email,  // The current user's email
-                    eventId: event._id,  // The event's ID
-                    role: role  // Either "Volunteer" or "Participant" based on the button clicked
+                    email: user.email, 
+                    eventId: event._id,  
+                    role: role  
                 }),
             });
 
             if (response.status === 201) {
-                alert('Successfully joined the event as a ' + role);
+                setSnackbar({
+                    open: true,
+                    message: 'Successfully joined the event as a ' + role,
+                    severity: 'success',
+                });
+            } else if (response.status === 400) {
+                setSnackbar({
+                    open: true,
+                    message: 'You have already joined the event',
+                    severity: 'warning',
+                });
             } else {
-                alert('Failed to join the event.');
+                setSnackbar({
+                    open: true,
+                    message: 'Failed to join the event.',
+                    severity: 'error',
+                });
             }
         } catch (error) {
             console.error('Error joining event:', error);
@@ -67,6 +95,30 @@ export default function EventPage({ event, onClose }) {
                 }} 
             >
                 <ArrowBack />
+            </Box>
+            <Box 
+                sx={{
+                    position: 'absolute',
+                    top: '1rem',
+                    right: '1rem', 
+                    cursor: 'pointer',
+                    backgroundColor: 'white',
+                    width: '35px',
+                    height: '35px',
+                    border: '1px solid lightgrey',
+                    borderRadius: '50%',
+                    zIndex: 5,
+                    display: 'flex', 
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }} 
+            >
+                <JoinedSnackbar
+                    message={snackbar.message}
+                    severity={snackbar.severity}
+                    open={snackbar.open}
+                    handleClose={handleClose}
+                />
             </Box>
             <Box
                 sx={{

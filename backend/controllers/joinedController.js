@@ -1,10 +1,6 @@
 const Joined = require('../models/joinedModel');
 
-/**
- * Save event IDs joined by a user.
- * @param {Object} req - Express request object containing email, eventId, and role.
- * @param {Object} res - Express response object.
- */
+
 const save_event_ids_joined_by_user = async (req, res) => {
     const { email, eventId, role } = req.body;
 
@@ -13,7 +9,7 @@ const save_event_ids_joined_by_user = async (req, res) => {
         const existingEntry = await Joined.findOne({ email, eventId });
 
         if (existingEntry) {
-            return res.status(404).json({ message: 'User has already joined this event' });
+            return res.status(400).json({ message: 'You have already joined this event' });
         }
 
         // Create a new entry if the user hasn't joined the event yet
@@ -24,17 +20,12 @@ const save_event_ids_joined_by_user = async (req, res) => {
         });
 
         await Joined.create(joinedEntry);
-        res.status(201).json({ message: 'Event successfully joined by user', joinedEntry });
+        res.status(201).json({ message: 'Event successfully joined', joinedEntry });
     } catch (err) {
-        res.status(500).json({ error: 'Failed to save joined event', details: err.message });
+        res.status(500).json({ error: 'Failed to join event', details: err.message });
     }
 };
 
-/**
- * Get all event IDs joined by a user using their email.
- * @param {Object} req - Express request object containing email.
- * @param {Object} res - Express response object.
- */
 const get_event_ids_by_user_email = async (req, res) => {
     const { email } = req.params;
 
