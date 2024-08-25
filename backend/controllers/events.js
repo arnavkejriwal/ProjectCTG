@@ -21,15 +21,16 @@ exports.get_events = async (req, res) => {
 // }
 
 exports.create_event = async (req, res) => {
-    const { title, description, event_id, emoji, image, subtitle, date, location, organiser, organiser_img, banner_img, volunteer_vacancies, participant_vacancies } = req.body;
+    const { title, description, age_range, emoji, image,time, subtitle, date, location, organiser, organiser_img, banner_img, volunteer_vacancies, participant_vacancies } = req.body;
     const newEvent = new Event({
         _id: mongoose.Schema.Types.ObjectId,
-        event_id,
+        age_range,
         emoji,
         title,
         image,
         subtitle,
         date,
+        time,
         location,
         description,
         organiser,
@@ -49,13 +50,14 @@ exports.create_event = async (req, res) => {
 
 exports.update_event = async (req, res) => {
     const { id } = req.params;
-    const { title, description, event_id, emoji, image, subtitle, date, location, organiser, organiser_img, banner_img, volunteer_vacancies, participant_vacancies } = req.body;
+    const { title, description, age_range, time, emoji, image, subtitle, date, location, organiser, organiser_img, banner_img, volunteer_vacancies, participant_vacancies } = req.body;
     if (!mongoose.Types.ObjectId.isValid(id)) { 
         return res.status(404).json({error: 'No such event'});
     }
     const updatedEvent = {
         _id: id,
-        event_id,
+        age_range,
+        time,
         emoji,
         title,
         image,

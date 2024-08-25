@@ -88,6 +88,7 @@ const WorkoutForm = ({ selectedWorkout, setSelectedWorkout }) => {
       subtitle,
       image,
       date,
+      time,
       location,
       // event_id: eventId,
       banner_img: bannerImg,
