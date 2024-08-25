@@ -7,9 +7,8 @@ const Achievement = () => {
             sx={{
                 boxShadow: 5,
                 padding: 3,
-                borderRadius: 2,
-                maxWidth: '175px', 
-                maxHeight: '125px', 
+                borderRadius: 2, 
+                maxHeight: '250px', 
                 backgroundColor: 'white',
                 border: '3px solid lightgrey',
                 position: 'relative',
