@@ -1,4 +1,7 @@
 const Joined = require('../models/joinedModel');
+const Event = require('..//models/events');
+const { sendSMS } = require('./twilioController');
+
 
 
 const save_event_ids_joined_by_user = async (req, res) => {
@@ -18,7 +21,11 @@ const save_event_ids_joined_by_user = async (req, res) => {
             eventId,
             role,  // Save role along with email and eventId
         });
-
+        const eventDetails = await Event.findById(eventId)
+        date=eventDetails.date
+        title=eventDetails.title
+        location=eventDetails.location
+        sendSMS({date,title,location,role})
         await Joined.create(joinedEntry);
         res.status(201).json({ message: 'Event successfully joined', joinedEntry });
     } catch (err) {
