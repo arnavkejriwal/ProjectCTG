@@ -13,25 +13,25 @@ import {
 import Quiz from '../components/Quiz';
 
 const quizzes = {
-  "Training Video Test": {
+  "Mental Health Camp Training": {
     description: "Test your knowledge from the video content",
-    video: "https://www.youtube.com/embed/VIDEO_ID_1",
+    video: "https://www.youtube.com/embed/watch?v=LaIXttN82sk&list=PLaTWjeYeMaR2vz9OZj1xQZXyExa0jvGCy",
     questions: [
       { question: "What is a common symptom of depression?", options: ["Increased energy", "Persistent sadness", "Euphoria"], answer: "Persistent sadness" },
       { question: "What does CBT stand for?", options: ["Cognitive Behavioral Therapy", "Crisis Behavioral Therapy", "Cognitive Biochemical Therapy"], answer: "Cognitive Behavioral Therapy" },
     ],
   },
-  "First Aid Training": {
-    description: "Assess your knowledge on first aid procedures.",
-    video: "https://www.youtube.com/embed/VIDEO_ID_2",
+  "Learn Cantonese!": {
+    description: "Learn the basics used in everyday Cantonese conversations.",
+    video: "https://www.youtube.com/embed/watch?v=p-jUPNQ8uBI&list=PLaTWjeYeMaR0dKCyyUeGNVsbXu806jHj1",
     questions: [
-      { question: "What is the first step in CPR?", options: ["Check for responsiveness", "Call for help", "Start chest compressions"], answer: "Check for responsiveness" },
-      { question: "Which of the following is a sign of a heart attack?", options: ["Chest pain", "Nausea", "Both"], answer: "Both" },
+      { question: "What is the Cantonese word for 'hello'?", options: ["你好", "再見", "多謝"], answer: "你好" },
+      { question: "What is the Cantonese word for 'thank you'?", options: ["多謝", "對唔住", "歡迎"], answer: "多謝" },
     ],
   },
   "Cultural Sensitivity Training": {
     description: "Test your understanding of cultural sensitivity and awareness.",
-    video: "https://www.youtube.com/embed/VIDEO_ID_3",
+    video: "https://www.youtube.com/embed/playlist?list=PLaTWjeYeMaR3ayT-mACkx0IBpOZXPMNmv",
     questions: [
       { question: "What is cultural sensitivity?", options: ["Ignoring cultural differences", "Understanding and respecting cultural differences", "Promoting one culture over another"], answer: "Understanding and respecting cultural differences" },
       { question: "Why is cultural competence important?", options: ["It helps avoid misunderstandings", "It is not important", "It promotes stereotypes"], answer: "It helps avoid misunderstandings" },
@@ -54,7 +54,7 @@ const TrainingPage = () => {
 
   return (
     <Container>
-      <Typography variant="h3" gutterBottom align="center" sx={{ fontWeight: 'bold', color: '#3f51b5', my: 4 }}>
+      <Typography variant="h3" gutterBottom align="center" sx={{ fontWeight: 'bold', color: '#01a9ff', my: 4 }}>
         Volunteer Training
       </Typography>
 

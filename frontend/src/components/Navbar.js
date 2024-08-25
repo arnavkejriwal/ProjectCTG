@@ -29,6 +29,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import BookIcon from '@mui/icons-material/Book';
 
 const Navbar = () => {
   const { user } = useAuthContext();
@@ -52,8 +53,9 @@ const Navbar = () => {
     { text: 'Home', icon: <HomeIcon />, link: '/home' },
     { text: 'Events', icon: <EventIcon />, link: '/events' },
     { text: 'Achievements', icon: <EmojiEventsIcon />, link: '/achievements' },
+    {text: 'Training', icon: <BookIcon />, link: '/training'},
     { text: 'Chatbot', icon: <ChatIcon />, link: '/chatbot' },
-    { text: 'Admin', icon: <AdminPanelSettingsIcon />, link: '/' }
+    { text: 'Admin', icon: <AdminPanelSettingsIcon />, link: '/' },
   ];
 
   return (
