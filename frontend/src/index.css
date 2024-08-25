@@ -38,6 +38,15 @@ header a {
   grid-template-columns: 3fr 1fr;
   gap: 100px;
 }
+
+@media (max-width: 1200px) {
+  .admin {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
 .workout-details {
   background: #fff;
   border-radius: 4px;
