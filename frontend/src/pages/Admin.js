@@ -1,60 +1,17 @@
 import { useEffect, useState } from 'react'
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
-import WorkoutDetails from '../components/WorkoutDetails'
-import WorkoutForm from '../components/WorkoutForm'
 import {useTheme} from '@mui/material/styles';
 import {Box, Typography} from '@mui/material';
 import { useMediaQuery } from '@mui/material';
-import {ArrowBackIos, ArrowForwardIos} from '@mui/icons-material';
-import Slider from 'react-slick';
+import {ArrowForwardIos} from '@mui/icons-material';
 import EventCard from '../components/EventCard';
 import { Grid, IconButton } from '@mui/material';
 import TestimonialCard from '../components/TestimonialCard'
+import Footer from '../components/Footer'
 
-const NextArrow = ({ onClick }) => {
-  return (
-    <div
-      style={{
-        display: "block",
-        position: "absolute",
-        top: "50%",
-        right: "-25px",
-        transform: "translateY(-50%)",
-        zIndex: 1,
-        cursor: "pointer",
-        color: "white",
-      }}
-      onClick={onClick}
-    >
-      <ArrowForwardIos />
-    </div>
-  );
-};
-
-const PrevArrow = ({ onClick }) => {
-  return (
-    <div
-      style={{
-        display: "block",
-        position: "absolute",
-        top: "50%",
-        left: "-25px",
-        transform: "translateY(-50%)",
-        zIndex: 1,
-        cursor: "pointer",
-        color: "white",
-      }}
-      onClick={onClick}
-    >
-      <ArrowBackIos />
-    </div>
-  );
-};
 
 const Admin = () => {
-  const { workouts, dispatch } = useWorkoutsContext()
-  const { user } = useAuthContext()
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [eventData, setEventData] = useState([]);
@@ -171,29 +128,31 @@ const Admin = () => {
             </Grid>
           ))}
           </Grid>
-          {/* The new yellowish arrow */}
-          <IconButton
-              sx={{
-                  backgroundColor: 'yellow',
-                  color: 'black',
-                  '&:hover': {
-                      backgroundColor: '#01a9ff',
-                      color: 'white',
-                      borderColor: 'white',
-                      transform: 'scale(1.1)',
-                      transition: 'transform 0.2s ease-in-out',
-                  },
-                  borderRadius: '50%',
-                  padding: '16px',
-                  marginRight: '16px',
-                  marginLeft: '16px',
-              }}
-              href='/events'
-          >
-              <ArrowForwardIos fontSize="large" />
-          </IconButton>
+          { !isSmallScreen && 
+            <IconButton
+                sx={{
+                    backgroundColor: 'yellow',
+                    color: 'black',
+                    '&:hover': {
+                        backgroundColor: '#01a9ff',
+                        color: 'white',
+                        borderColor: 'white',
+                        transform: 'scale(1.1)',
+                        transition: 'transform 0.2s ease-in-out',
+                    },
+                    borderRadius: '50%',
+                    padding: '16px',
+                    marginRight: '16px',
+                    marginLeft: '16px',
+                }}
+                href='/events'
+            >
+                <ArrowForwardIos fontSize="large" />
+            </IconButton>
+           }
         </Box>
-
+        
+        {/* Community Section */}
         <Box sx={{ marginBottom: theme.spacing(1), backgroundColor: "#fff" }}>
           <Typography
               variant="h4"
@@ -208,54 +167,40 @@ const Admin = () => {
               Hear From Our Community!
           </Typography>
       </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: theme.spacing(6), backgroundColor: '#fff' }}>
-      <Grid
-        container
-        spacing={isSmallScreen ? 2 : 4}
-        sx={{
-            marginTop: theme.spacing(2),
-        }}
-    >
-            <Grid
-              xs={12}
-              md={6}
-              ml={2}
-              lg={4}
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: theme.spacing(4), backgroundColor: '#fff', marginRight: theme.spacing(2), marginLeft: theme.spacing(2) }}>
+          <Grid
+              container
+              spacing={isSmallScreen ? 2 : 4}
               sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                '&:hover': {
-                  transform: 'scale(1.03)',
-                  transition: 'transform 0.2s ease-in-out',
-                }
+                  marginTop: theme.spacing(2),
               }}
-            >
-             <TestimonialCard/>
-            </Grid>
-
-            <Grid
-              xs={12}
-              md={6}
-              ml={2}
-              lg={4}
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                '&:hover': {
-                  transform: 'scale(1.03)',
-                  transition: 'transform 0.2s ease-in-out',
-                }
-              }}
-            >
-             <TestimonialCard/>
-            </Grid>
-
-            
-
+              margin={theme.spacing(2)}
+          >
+              {[1, 2, 3].map((_, index) => (
+                <Grid
+                  key={index}
+                  item
+                  xs={12}
+                  md={4}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    '&:hover': {
+                      transform: 'scale(1.03)',
+                      transition: 'transform 0.2s ease-in-out',
+                    },
+                    margin: theme.spacing(2),
+                    marginLeft: theme.spacing(-2),
+                  }}
+                >
+                  <TestimonialCard />
+                </Grid>
+              ))}
           </Grid>
-          </Box>
+      </Box>
+      
+      <Footer />
     
     </div>
   )

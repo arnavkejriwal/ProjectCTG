@@ -6,7 +6,7 @@ const TestimonialCard = () => {
         <div className="testimonial-card">
             <Box
                 sx={{
-                    width: { xs: '100%', sm: 400, md: 450 },
+                    width: { xs: '100%', sm: 300, md: 350 },
                     border: '1px solid #E0E0E0',
                     borderRadius: '10px',
                     display: 'flex',
@@ -31,7 +31,7 @@ const TestimonialCard = () => {
                 >
                     <img
                         src="https://t4.ftcdn.net/jpg/05/31/37/89/360_F_531378938_xwRjN9e5ramdPj2coDwHrwk9QHckVa5Y.jpg"
-                        alt="Sample Image"
+                        alt="A person smiling in a park"
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }} // Cover to maintain aspect ratio
                     />
                 </Box>
