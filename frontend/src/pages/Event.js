@@ -1,14 +1,21 @@
 import EventCard from "../components/EventCard";
 import EventDetails from "../components/EventDetails";
+import EventBanner from "../components/EventBanner"; // Import the EventBanner component
 import { useState, useEffect } from "react";
 import { useTheme } from '@mui/material/styles';
-import { Grid, TextField, MenuItem, Select, FormControl, InputLabel, Typography, Box } from "@mui/material";
+import { Grid, TextField, MenuItem, Select, FormControl, InputLabel, Box } from "@mui/material";
 import { useMediaQuery } from '@mui/material';
-import {Container, Card} from "@mui/material";
+import Slider from "react-slick"; // Import react-slick for the carousel
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIos from '@mui/icons-material/ArrowBackIos';
+import { InputAdornment, IconButton } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 const parseDate = (dateStr) => {
     const [day, month, year] = dateStr.split('/').map(Number);
-    return new Date(year, month - 1, day); // Note: Month is 0-indexed in JS Date
+    return new Date(year, month - 1, day);
 };
 
 const Event = () => {
@@ -27,7 +34,6 @@ const Event = () => {
         try {
             const response = await fetch('/api/events/get_events');
             const json = await response.json();
-            console.log(json);
             setEventData(json);
         } catch (error) {
             console.error("Error getting event data:", error);
@@ -44,7 +50,7 @@ const Event = () => {
         .filter(event => {
             const eventDate = parseDate(event.date);
             const today = new Date();
-            return eventDate >= today;  // Filter out expired events
+            return eventDate >= today;
         })
         .filter(event => {
             const matchesSearchQuery = event.title.toLowerCase().includes(searchQuery.toLowerCase());
@@ -54,161 +60,223 @@ const Event = () => {
             const matchesDestination = selectedDestination === "All" || event.location === selectedDestination;
             return matchesSearchQuery && matchesMonth && matchesDestination;
         })
-        .sort((a, b) => parseDate(a.date) - parseDate(b.date));  // Sort events by date
-
-    const groupedEvents = filteredEvents.reduce((groups, event) => {
-        const eventDate = parseDate(event.date);
-        const month = eventDate.getMonth();
-        const monthName = eventDate.toLocaleString('default', { month: 'long' });
-        if (!groups[month]) {
-            groups[month] = { monthName, events: [] };
-        }
-        groups[month].events.push(event);
-        return groups;
-    }, {});
+        .sort((a, b) => parseDate(a.date) - parseDate(b.date));
 
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [eventDetailsOpen, setEventDetailsOpen] = useState(false);
 
+    // Settings for the carousel using react-slick
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 1000,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true, // Enable autoplay
+        autoplaySpeed: 5000, // Change slide every 5 seconds
+        arrows: true,
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
+        dotsClass: "slick-dots custom-dots", 
+        appendDots: (dots) => (
+            <div
+                style={{
+                    position: 'relative',
+                    bottom: '30px',
+                    color: 'white'
+                }}
+            >
+                <ul style={{ margin: "0px", padding: "0", color: "white" }}> {dots} </ul>
+            </div>
+        ),
+    };
+    
+    
+
     return (
-        <Box sx={{ backgroundColor: 'white', padding: theme.spacing(0)}}>
-            { eventDetailsOpen? (
-                <EventDetails event={selectedEvent} onClose={() => { setEventDetailsOpen(false); setSelectedEvent(null); }}/>
+        <Box sx={{ backgroundColor: 'white', padding: theme.spacing(0) }}>
+            {eventDetailsOpen ? (
+                <EventDetails event={selectedEvent} onClose={() => { setEventDetailsOpen(false); setSelectedEvent(null); }} />
             ) : (
                 <>
-                    {/* Title Section */}
-                    <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginBottom: theme.spacing(6) }}>
-                        <Box
-                            component="img"
-                            src="https://d2yy7txqjmdbsq.cloudfront.net/nonprofits/05da5a45-cbcb-4e08-8bb8-2f2f5784583c/3031/gal__DSC1265.JPG"
-                            sx={{
-                                width: '100%',
-                                height: { xs: '250px', sm: '450px' },
-                                marginBottom: theme.spacing(6),
-                                borderRadius: theme.shape.borderRadius,
-                                objectFit: { xs: 'contain', sm: 'cover' },
-                                zIndex: 0,
-                                overflow: "auto",
-                                borderRadius: theme.shape.borderRadius,
-                            }} />
-                        <Typography
-                            sx={{
-                                padding: theme.spacing(1),
-                                borderRadius: theme.shape.borderRadius,
-                                boxShadow: '0 5px 20px rgba(0, 0, 0, 0.1)',
-                                marginTop: -10,
-                                width: { xs: '50%', sm: '20%' },
-                                alignContent: 'center',
-                                marginBottom: theme.spacing(0.5),
-                                zIndex: 1,
-                                backgroundColor: 'white',
-                                textAlign: 'center',
-                                fontWeight: 'bold',
-                                color: '#01a9ff',
-                            }}
-                            variant={isSmallScreen ? "h5" : "h4"}
-                        >
-                            Events
-                        </Typography>
+                    {/* Carousel Section */}
+                    <Box sx={{ marginBottom: theme.spacing(6), borderRadius: "20px" }}>
+                        <Slider {...settings}>
+                            {filteredEvents.slice(0, 5).map((event, index) => (
+                                <Box key={index} > 
+                                    <EventBanner
+                                        event={event}
+                                        onClick={() => { setSelectedEvent(event); setEventDetailsOpen(true); }}
+                                    />
+                                </Box>
+                            ))}
+                        </Slider>
                     </Box>
-                    
+
                     {/* Search and Filter Section */}
                     <Grid container spacing={4} alignItems="center" justifyContent="center" sx={{ marginBottom: theme.spacing(6) }}>
-                        <Grid item xs={12} md={6} lg={4}>
+                    <Grid item xs={12} md={6} lg={4}>
                             <TextField
-                                label="Search by title"
-                                variant="standard"
+                                variant="outlined"
                                 fullWidth
+                                placeholder="Search by title"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton>
+                                                <SearchIcon />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
                                 sx={{
                                     backgroundColor: '#fff',
-                                    borderRadius: "5px",
-                                    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-                                }} />
+                                    borderRadius: '25px', // Rounded edges like the image
+                                    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Soft shadow for floating effect
+                                    '& .MuiOutlinedInput-root': {
+                                        borderRadius: '25px', // Ensures the input field corners match
+                                    },
+                                    '& .MuiOutlinedInput-notchedOutline': {
+                                        border: 'none', // Remove default border for a minimal look
+                                    },
+                                }}
+                            />
                         </Grid>
+                        {/* Month Filter */}
                         <Grid item xs={12} md={3}>
-                            <FormControl fullWidth variant="outlined" sx={{ backgroundColor: '#fff', borderRadius: theme.shape.borderRadius, boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)' }}>
+                            <FormControl fullWidth variant="outlined" sx={{
+                                backgroundColor: '#fff',
+                                borderRadius: '25px', // Rounded edges for modern look
+                                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Soft shadow for floating effect
+                            }}>
                                 <InputLabel>Month</InputLabel>
                                 <Select
                                     value={selectedMonth}
                                     onChange={(e) => setSelectedMonth(e.target.value)}
                                     label="Month"
+                                    sx={{
+                                        borderRadius: '25px',
+                                        '& .MuiOutlinedInput-notchedOutline': {
+                                            border: 'none', // Remove border for clean look
+                                        },
+                                    }}
                                 >
                                     {monthOptions.map((month, index) => (
-                                        <MenuItem key={index} value={month}>{month}</MenuItem>
+                                        <MenuItem key={index} value={month}>
+                                            {month}
+                                        </MenuItem>
                                     ))}
                                 </Select>
                             </FormControl>
                         </Grid>
+
+                        {/* Location Filter */}
                         <Grid item xs={12} md={3}>
-                            <FormControl fullWidth variant="outlined" sx={{ backgroundColor: '#fff', borderRadius: theme.shape.borderRadius, boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)' }}>
+                            <FormControl fullWidth variant="outlined" sx={{
+                                backgroundColor: '#fff',
+                                borderRadius: '25px',
+                                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Soft shadow for floating effect
+                            }}>
                                 <InputLabel>Location</InputLabel>
                                 <Select
                                     value={selectedDestination}
                                     onChange={(e) => setSelectedDestination(e.target.value)}
                                     label="Destination"
+                                    sx={{
+                                        borderRadius: '25px',
+                                        '& .MuiOutlinedInput-notchedOutline': {
+                                            border: 'none', // Remove border for clean look
+                                        },
+                                    }}
                                 >
                                     {destinationOptions.map((destination, index) => (
-                                        <MenuItem key={index} value={destination}>{destination}</MenuItem>
+                                        <MenuItem key={index} value={destination}>
+                                            {destination}
+                                        </MenuItem>
                                     ))}
                                 </Select>
                             </FormControl>
                         </Grid>
                     </Grid>
-
-                    {/* Event Groups by Month */}
-                    {Object.values(groupedEvents).map((group, idx) => (
-                        <Box key={idx} sx={{ marginBottom: theme.spacing(6), backgroundColor: "#fff" }}>
-                            <Typography
-                                variant="h5"
-                                gutterBottom
-                                sx={{
-                                    fontWeight: 600,
-                                    color: '#333',
-                                    borderBottom: `2px solid #333`,
-                                    paddingBottom: theme.spacing(1),
-                                }}
-                            >
-                                {group.monthName}
-                            </Typography>
+                    {/* Event Cards Grid */}
+                    <Grid
+                        container
+                        spacing={isSmallScreen ? 2 : 4}
+                        sx={{
+                            marginTop: theme.spacing(2),
+                        }}
+                    >
+                        {filteredEvents.map((event, index) => (
                             <Grid
-                                container
-                                spacing={isSmallScreen ? 2 : 4}
+                                key={index}
+                                item
+                                xs={12}
+                                sm={6}
+                                md={4}
                                 sx={{
-                                    marginTop: theme.spacing(2),
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    '&:hover': {
+                                        transform: 'scale(1.03)',
+                                        transition: 'transform 0.2s ease-in-out',
+                                    },
                                 }}
                             >
-                                {group.events.map((event, index) => (
-                                    <Grid
-                                        key={index}
-                                        item
-                                        xs={12}
-                                        md={6}
-                                        lg={4}
-                                        sx={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            '&:hover': {
-                                                transform: 'scale(1.03)',
-                                                transition: 'transform 0.2s ease-in-out',
-                                            }
-                                        }}
-                                    >
-                                        <EventCard
-                                            event={event}
-                                            onClick={() => { setSelectedEvent(event); setEventDetailsOpen(true); }}
-                                        />
-                                    </Grid>
-                                ))}
+                                <EventCard
+                                    event={event}
+                                    onClick={() => { setSelectedEvent(event); setEventDetailsOpen(true); }}
+                                />
                             </Grid>
-                        </Box>
-                    ))}
+                        ))}
+                    </Grid>
                 </>
             )}
         </Box>
     );
 }
+
+const NextArrow = ({ onClick }) => {
+    return (
+        <div
+            style={{
+                display: "block",
+                position: "absolute",
+                top: "50%",
+                right: "-25px",
+                transform: "translateY(-50%)",
+                zIndex: 1,
+                cursor: "pointer",
+                color: "white",
+            }}
+            onClick={onClick}
+        >
+            <ArrowForwardIos sx={{ fontSize: "30px", color: "#333" }} />
+        </div>
+    );
+};
+
+const PrevArrow = ({ onClick }) => {
+    return (
+        <div
+            style={{
+                display: "block",
+                position: "absolute",
+                top: "50%",
+                left: "-25px",
+                transform: "translateY(-50%)",
+                zIndex: 1,
+                cursor: "pointer",
+                color: "white",
+                ml: "10px",
+            }}
+            onClick={onClick}
+        >
+            <ArrowBackIos sx={{ ml: "8px", fontSize: "30px", color: "#333" }} />
+        </div>
+    );
+};
 
 export default Event;

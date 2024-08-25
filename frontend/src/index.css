@@ -45,6 +45,14 @@ header a {
   }
 }
 
+.custom-dots li button {
+  background-color: 'white';
+}
+
+.custom-dots li.slick-active button {
+  background-color: 'white';
+  opacity: 1;
+}
 
 
 .workout-details {
