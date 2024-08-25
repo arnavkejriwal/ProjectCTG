@@ -210,35 +210,33 @@ function Profile() {
         break;
     case 'events':
         if (isFeedbackOpen) {
-            <Box sx={{ mt: 2, width: { xs: '100%', sm: '60%' }, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', mx: 'auto' }}>
-                content = <FeedbackForm onClose={() => {setIsFeedbackOpen(false)}} />;
-            </Box>
+            content = <FeedbackForm onClose={() => {setIsFeedbackOpen(false)}} />;
         } else {
             content = 
-                <Grid container spacing={2} sx={{ mt: 2, width: { xs: '100%', sm: '60%' }, mx: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                    <Grid item xs={12}>
-                        <Typography variant="h4" sx={{ mb: 2, mt: 2 }}>Events joined as Volunteers</Typography>
-                    </Grid>
-                    {eventData.slice(0, 5).map((event, index) => (
-                        <Grid item xs={12} key={index}>
-                            <FeedbackCard
-                                event={event}
-                                onClick={() => setIsFeedbackOpen(true)}
-                            />
-                        </Grid>
-                    ))}
-                    <Grid item xs={12}>
-                        <Typography variant="h4" sx={{ mb: 2, mt: 2 }}>Events joined as Participants</Typography>
-                    </Grid>
-                    {eventData.slice(0, 8).map((event, index) => (
-                        <Grid item xs={12} key={index}>
-                            <FeedbackCard
-                                event={event}
-                                onClick={() => setIsFeedbackOpen(true)}
-                            />
-                        </Grid>
-                    ))}
-                </Grid>
+            <Box sx={{ mt: 2, width: { xs: '100%', sm: '100%', md: '70%' }, mx: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
+                <Box sx={{ width: '100%' }}>
+                    <Typography variant="h6" color="grey" sx={{ mb: 2, mt: 2, textAlign: 'center'}}>Volunteered in:</Typography>
+                </Box>
+                {eventData.slice(0, 5).map((event, index) => (
+                    <Box sx={{ width: '100%', mx: 'auto', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',}} key={index}>
+                        <FeedbackCard
+                            event={event}
+                            onClick={() => setIsFeedbackOpen(true)}
+                        />
+                    </Box>
+                ))}
+                <Box sx={{ width: '100%' }}>
+                    <Typography variant="h6" color="grey" sx={{ mb: 2, mt: 2, textAlign: 'center'}}>Participated in:</Typography>
+                </Box>
+                {eventData.slice(0, 8).map((event, index) => (
+                    <Box sx={{ width: '100%', mx: 'auto', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',}} key={index}>
+                        <FeedbackCard
+                            event={event}
+                            onClick={() => setIsFeedbackOpen(true)}
+                        />
+                    </Box>
+                ))}
+            </Box>
             ;
         }
         break;
@@ -399,7 +397,7 @@ function Profile() {
                     borderRadius: '50%',
                     border: '3px solid lightgrey',
                     backgroundColor: 'lightgrey',
-                    backgroundImage: 'url("https://m.media-amazon.com/images/M/MV5BMDEyMTk5MmEtM2VhYi00ZTYxLTlhZWItZjI0Zjc2NGNhMTk0L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjU1NzQ0NzY@._V1_.jpg")',
+                    backgroundImage: 'url("https://image.tensorartassets.com/cdn-cgi/image/anim=false,plain=false,w=1000,f=avif,q=85/model_showcase/617496858689931351/f84c24ad-2deb-d903-7ce9-38f23012756d.jpeg")',
                     backgroundSize: 'contain',
                     backgroundPosition: 'center',
                     width: 120,

@@ -134,7 +134,7 @@ const FeedbackForm = (onClose) => {
 
               borderRadius: 2,
 
-              width: '600px',
+              width: '70%',
 
               maxHeight: '80vh',
 
@@ -151,19 +151,6 @@ const FeedbackForm = (onClose) => {
             }}
 
           >
-
-            <IconButton
-
-              sx={{ position: 'absolute', top: 16, right: 16 }}
-
-              onClick={handleClose}
-
-            >
-
-              <CloseIcon />
-
-            </IconButton>
-
   
 
             <Typography variant="h4" gutterBottom>
