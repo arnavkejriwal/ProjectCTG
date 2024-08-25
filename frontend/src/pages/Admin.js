@@ -151,6 +151,55 @@ const Admin = () => {
             </IconButton>
            }
         </Box>
+
+        <Box sx={{ marginBottom: theme.spacing(1), backgroundColor: "#fff" }}>
+          <Typography
+              variant="h4"
+              align="center"
+              sx={{
+                  fontWeight: 600,
+                  color: '#333',
+                  borderBottom: `2px solid #333`,
+                  paddingBottom: theme.spacing(1),
+              }}
+          >
+              Featured Quizzes
+          </Typography>
+          
+      </Box>
+
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: theme.spacing(4), backgroundColor: '#fff', marginRight: theme.spacing(2), marginLeft: theme.spacing(2) }}>
+          <Grid
+              container
+              spacing={isSmallScreen ? 2 : 4}
+              sx={{
+                  marginTop: theme.spacing(2),
+              }}
+              margin={theme.spacing(2)}
+          >
+              {[1, 2, 3].map((_, index) => (
+                <Grid
+                  key={index}
+                  item
+                  xs={12}
+                  md={4}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    '&:hover': {
+                      transform: 'scale(1.03)',
+                      transition: 'transform 0.2s ease-in-out',
+                    },
+                    margin: theme.spacing(2),
+                    marginLeft: theme.spacing(-2),
+                  }}
+                >
+                  <TestimonialCard />
+                </Grid>
+              ))}
+          </Grid>
+      </Box>
         
         {/* Community Section */}
         <Box sx={{ marginBottom: theme.spacing(1), backgroundColor: "#fff" }}>
@@ -199,6 +248,7 @@ const Admin = () => {
               ))}
           </Grid>
       </Box>
+      
       
       <Footer />
     
