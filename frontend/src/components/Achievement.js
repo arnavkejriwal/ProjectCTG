@@ -10,10 +10,10 @@ const achievements = {
         enabled: true
     },
     2: {
-        badge: 'badges/Badge2.png',
+        badge: 'badges/Badge6.png',
         title: 'Early Bird',
         description: 'Register for an event a month in advance',
-        enabled: false
+        enabled: true
     },
     3: {
         badge: 'badges/Badge3.png',
@@ -25,7 +25,7 @@ const achievements = {
         badge: 'badges/Badge4.png',
         title: 'Helping Hand',
         description: 'Volunteer at an event',
-        enabled: false
+        enabled: true
     },
     5: {
         badge: 'badges/Badge5.png',
@@ -34,7 +34,7 @@ const achievements = {
         enabled: false
     },
     6: {
-        badge: 'badges/Badge6.png',
+        badge: 'badges/Badge2.png',
         title: 'Event Enthusiast',
         description: 'Participate at 5 events',
         enabled: false
@@ -62,7 +62,7 @@ const Achievement = ({id}) => {
                 padding: 3,
                 borderRadius: 2, 
                 height: { xs: '175px', sm: '240px', md: '250px' },
-                backgroundColor: 'white',
+                backgroundColor: achievement.enabled ? 'white' : 'lightgrey',
                 border: '3px solid lightgrey',
                 position: 'relative',
                 display: 'flex',
@@ -74,6 +74,7 @@ const Achievement = ({id}) => {
             <Box sx={{
                 backgroundColor: 'transparent',
                 backgroundImage: `url("${achievement.badge}")`,
+                filter: achievement.enabled ? 'none' : 'grayscale(100%)',
                 backgroundSize: 'contain',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
@@ -83,10 +84,10 @@ const Achievement = ({id}) => {
                 top: -30,
             }}>
             </Box>
-            <Typography variant="h6" sx={{ marginTop: 6, textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ marginTop: 6, textAlign: 'center', filter: achievement.enabled ? 'none' : 'grayscale(100%)' }}>
                 { achievement.title }
             </Typography>
-            <Typography variant="subtitle1" sx={{ color: 'gray', textAlign:'center'}}>
+            <Typography variant="subtitle1" sx={{ color: 'gray', textAlign:'center', filter: achievement.enabled ? 'none' : 'grayscale(100%)' }}>
                 { achievement.description }
             </Typography>
         </Box>
