@@ -128,9 +128,9 @@ const WorkoutForm = ({ selectedWorkout, setSelectedWorkout }) => {
 
   return (
     <form fullWidth onSubmit={handleSubmit}>
-      <Typography variant="h4" gutterBottom>
+      {/* <Typography variant="h4" gutterBottom>
         {isUpdateMode ? "Update Event" : "Add a New Event"}
-      </Typography>
+      </Typography> */}
       <Grid container spacing={2}>
       <Grid item xs={12} sm={6}>
           <TextField

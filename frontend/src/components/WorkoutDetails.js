@@ -41,7 +41,6 @@ const WorkoutDetails = ({ workout, setSelectedWorkout }) => {
         flexDirection={"column"}
         style={{
           padding: "16px",
-          boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
           borderRadius: "8px",
         }}
         onClick={handleEditClick}
