@@ -3,6 +3,7 @@ import { Box, Typography, Button } from '@mui/material';
 import PlaceIcon from '@mui/icons-material/Place';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import StarIcon from '@mui/icons-material/Star';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useState } from 'react';
@@ -102,11 +103,9 @@ export default function EventPage({ event, onClose }) {
                     top: '1rem',
                     right: '1rem', 
                     cursor: 'pointer',
-                    backgroundColor: 'white',
+                    backgroundColor: 'transparent',
                     width: '35px',
                     height: '35px',
-                    border: '1px solid lightgrey',
-                    borderRadius: '50%',
                     zIndex: 5,
                     display: 'flex', 
                     alignItems: 'center',
@@ -131,7 +130,7 @@ export default function EventPage({ event, onClose }) {
                     sx={{
                         width: '100%',
                         height: '100%',
-                        backgroundImage: 'url(https://www.sadiasteaparty.com/wp-content/uploads/2013/03/MG_1111.jpg)',
+                        backgroundImage: `url(${event.banner_img})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         position: 'absolute',
@@ -170,6 +169,20 @@ export default function EventPage({ event, onClose }) {
                 <Box sx={{ display: 'block', textAlign: 'left', mt: 2 }}>
                     <Typography variant="h4" fontWeight="bold">{event.title}</Typography>
                     <Typography variant="h6" color={'grey'}>{event.subtitle}</Typography>
+                    <Box sx={{width:65, 
+                display:'flex', 
+                flexDirection:'row', 
+                justifyContent:'center', 
+                backgroundColor: '#FFF', 
+                borderRadius:'20px',
+                paddingTop: '5px',
+                border: '1px solid lightgrey',
+                mt: 1}}>
+            <Typography variant="body1" sx={{color: '#000', fontSize: 14}}>
+            150 
+            </Typography>
+            <StarIcon sx={{fontSize: 18, color:'#FDDA0D'}}/>
+          </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'column', mt: 3, gap: 1 }}>
                         <Typography variant="body1" color={'grey'} sx={{ display: 'flex', alignItems: 'start', gap: 0.5 }}>
                             <CalendarMonthIcon fontSize='small' />

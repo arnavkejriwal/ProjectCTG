@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
+import StarIcon from '@mui/icons-material/Star';
 import EventIcon from '@mui/icons-material/Event';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -113,7 +114,18 @@ const Navbar = () => {
               The Zubin Foundation
             </Typography>
           )}
-
+          <Box sx={{width:65, 
+            display:'flex', 
+            flexDirection:'row', 
+            justifyContent:'center', 
+            backgroundColor: '#FDDA0D', 
+            borderRadius:'20px',
+            boxShadow: '0 0 5px 5px lightyellow',}}>
+            <Typography variant="body1" sx={{color: '#FFF', fontSize: 14}}>
+            2750 
+            </Typography>
+            <StarIcon sx={{fontSize: 18, color:'#FFF'}}/>
+          </Box>
           {/* Profile Icon - Floated right on small screens */}
           {user ? (
             <Box sx={{ ml: isSmallScreen ? 'auto' : 'none' }}>

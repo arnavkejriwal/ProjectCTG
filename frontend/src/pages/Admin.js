@@ -174,7 +174,7 @@ const Admin = () => {
       <Box sx={{ marginBottom: theme.spacing(6), borderRadius: "20px" }}>
         <Slider {...carouselSettings}>
           {eventData.map((event, index) => (
-            <Box key={index} onClick={() => { setSelectedEvent(event); setEventDetailsOpen(true); }}>
+            <Box key={index} sx={{padding: theme.spacing(2)}} onClick={() => { setSelectedEvent(event); setEventDetailsOpen(true); }}>
               <EventCard event={event} />
             </Box>
           ))}

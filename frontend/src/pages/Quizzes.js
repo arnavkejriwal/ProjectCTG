@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Quiz from '../components/Quiz';
+import StarIcon from '@mui/icons-material/Star';
 import {
   Container,
   Typography,
@@ -109,7 +110,7 @@ const QuizzesPage = () => {
     {/* Cantonese Quizzes Section */}
     <Typography variant="h5" sx={{ my: 4 }} fontWeight={'bold'}>Cantonese Quizzes</Typography>
     {Object.entries(quizzes).filter(([title]) => title.includes("Cantonese")).map(([title, { description, image, questions }]) => (
-      <Paper key={title} elevation={3} sx={{ mb: 4, p: 3, borderRadius: 2 }}>
+      <Paper key={title} elevation={3} sx={{ position: 'relative', mb: 4, p: 3, borderRadius: 2 }}>
         <Typography variant="h6" gutterBottom>{title}</Typography>
         <Typography variant="body1" gutterBottom>{description}</Typography>
         <Button 
@@ -120,6 +121,23 @@ const QuizzesPage = () => {
         >
           Start Quiz
         </Button>
+        <Box sx={{width:65, 
+                position: 'absolute',
+                bottom: 10,
+                right: 7.5,
+                display:'flex', 
+                flexDirection:'row', 
+                justifyContent:'center', 
+                backgroundColor: '#FFF', 
+                borderRadius:'20px',
+                paddingTop: '5px',
+                border: '1px solid lightgrey',
+                mt: 1}}>
+            <Typography variant="body1" sx={{color: '#000', fontSize: 14}}>
+            50 
+            </Typography>
+            <StarIcon sx={{fontSize: 18, color:'#FDDA0D'}}/>
+          </Box>
       </Paper>
     ))}
 
@@ -133,7 +151,24 @@ const QuizzesPage = () => {
     </Modal>
 
     {Object.entries(quizzes).filter(([title]) => title.includes("Patient Health")).map(([title, { description, questions }]) => (
-      <Paper key={title} elevation={3} sx={{ mb: 4, p: 3, borderRadius: 2 }}>
+      <Paper key={title} elevation={3} sx={{ mb: 4, p: 3, borderRadius: 2, position: 'relative'}}>
+        <Box sx={{width:65, 
+                position: 'absolute',
+                bottom: 10,
+                right: 7.5,
+                display:'flex', 
+                flexDirection:'row', 
+                justifyContent:'center', 
+                backgroundColor: '#FFF', 
+                borderRadius:'20px',
+                paddingTop: '5px',
+                border: '1px solid lightgrey',
+                mt: 1}}>
+            <Typography variant="body1" sx={{color: '#000', fontSize: 14}}>
+            50 
+            </Typography>
+            <StarIcon sx={{fontSize: 18, color:'#FDDA0D'}}/>
+          </Box>
         <Typography variant="h6" gutterBottom>{title}</Typography>
         <Typography variant="body1" gutterBottom>{description}</Typography>
         <Button 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import PlaceIcon from '@mui/icons-material/Place';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import StarIcon from '@mui/icons-material/Star';
 
 export default function EventCard({ event, onClick }) {
     return (
@@ -49,11 +50,26 @@ export default function EventCard({ event, onClick }) {
                     <CalendarMonthIcon fontSize="small" sx={{ color: 'white', marginRight: 0.5 }} />
                     {event.date}
                 </Typography>
+                <Box sx={{width:55, 
+                    display:'flex',
+                    position: 'absolute',
+                    bottom: 10,
+                    right: 7.5, 
+                    zIndex: 2,
+                    flexDirection:'row', 
+                    justifyContent:'center', 
+                    backgroundColor: '#FFF', 
+                    borderRadius:'20px'}}>
+                <Typography variant="body1" sx={{color: '#000', fontSize: 14}}>
+                    150 
+                </Typography>
+                <StarIcon sx={{fontSize: 18, color:'#FDDA0D'}}/>
+                </Box>
                 <Box
                     sx={{
                         width: '100%',
                         height: '100%',
-                        backgroundImage: 'url(https://www.sadiasteaparty.com/wp-content/uploads/2013/03/MG_1111.jpg)',
+                        backgroundImage: `url(${event.image})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         position: 'absolute',
