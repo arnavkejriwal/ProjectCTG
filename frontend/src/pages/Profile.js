@@ -1,43 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Box, Typography, LinearProgress, Tabs, Tab, TextField, Button } from '@mui/material'
-import Achievement from '../components/Achievement';
+import Achievement, { achievements } from '../components/Achievement';
 import { useLogout } from '../hooks/useLogout';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 function Profile() {
     const [selectedTab, setSelectedTab] = useState('achievements');
-
+    const {user} = useAuthContext();
+    
     const handleTabChange = (e, v) => {
         setSelectedTab(v);
-    }
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
-    const [number, setNumber] = useState('');
-    const [age, setAge] = useState('');
-    const [isAdmin, setIsAdmin] = useState(false);
-
-    const handleSave = (e) => {
-        e.preventDefault();
-        console.log({ email, password, name, number, age });
     };
+
+    const [email, setEmail] = useState(user.email);
+    const [name, setName] = useState(user.name);
+    const [number, setNumber] = useState(user.number);
+    const [age, setAge] = useState(user.age);
+
+    const handleSave = async (e) => {
+        e.preventDefault();
+    };
+
+    const { logout } = useLogout();
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        logout();
+        navigate('/home');
+    };
+
+    const filteredAchievements = Object.keys(achievements)
+        .filter(key => achievements[key].enabled)
+        .map(key => (
+            <Achievement key={key} id={key} />
+        ));
 
     let content;
     switch (selectedTab) {
     case 'achievements':
         content = (
-            <Grid container spacing={2} sx={{mt: 6}}>
+            <Grid container spacing={3} sx={{mt: 6}}>
                 <Grid item xs={12} sm={6} md={3}>
-                    <Achievement />
+                    <Achievement id={1}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
-                    <Achievement />
+                    <Achievement id={2}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
-                    <Achievement />
+                    <Achievement id={3}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
-                    <Achievement />
+                    <Achievement id={4}/>
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <Achievement id={5}/>
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <Achievement id={6}/>
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <Achievement id={7}/>
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <Achievement id={8}/>
                 </Grid>
             </Grid>
         )
@@ -52,17 +77,10 @@ function Profile() {
                     label="Email address"
                     type="email"
                     fullWidth
+                    disabled
                     margin="normal"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                />
-                <TextField
-                    label="Password"
-                    type="password"
-                    fullWidth
-                    margin="normal"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
                 />
                 <TextField
                     label="Full Name"
@@ -90,7 +108,7 @@ function Profile() {
                     onChange={(e) => setAge(e.target.value)}
                 />
                 <Box sx={{ mt: 5, width:'100%', display: 'flex', flexDirection:'row', justifyContent:'space-between' }}>
-                    <Button variant="contained" color="error" sx={{ mt: 2 }}>
+                    <Button variant="contained" color="error" sx={{ mt: 2 }} onClick={handleLogout}>
                         Log Out
                     </Button>
                     <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
