@@ -9,6 +9,14 @@ const save_event_ids_joined_by_user = async (req, res) => {
     const { email, eventId, role } = req.body;
 
     try {
+        // Check if the user has already joined this event
+        const existingEntry = await Joined.findOne({ email, eventId });
+
+        if (existingEntry) {
+            return res.status(404).json({ message: 'User has already joined this event' });
+        }
+
+        // Create a new entry if the user hasn't joined the event yet
         const joinedEntry = new Joined({
             email,
             eventId,
