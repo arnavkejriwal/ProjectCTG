@@ -397,7 +397,7 @@ function Profile() {
                     borderRadius: '50%',
                     border: '3px solid lightgrey',
                     backgroundColor: 'lightgrey',
-                    backgroundImage: 'url("https://image.tensorartassets.com/cdn-cgi/image/anim=false,plain=false,w=1000,f=avif,q=85/model_showcase/617496858689931351/f84c24ad-2deb-d903-7ce9-38f23012756d.jpeg")',
+                    backgroundImage: 'url("profile.jpg")',
                     backgroundSize: 'contain',
                     backgroundPosition: 'center',
                     width: 120,

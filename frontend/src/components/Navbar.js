@@ -132,7 +132,16 @@ const Navbar = () => {
           {user ? (
             <Box sx={{ ml: isSmallScreen ? 'auto' : 'none' }}>
               <IconButton onClick={handleProfileMenuOpen}>
-                <AccountCircleIcon sx={{ fontSize: 50 }} />
+                <Box
+                    sx={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: '50%',
+                      backgroundImage: `url("profile.jpg")`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  />
               </IconButton>
             </Box>
           ) : (
@@ -222,7 +231,7 @@ const Navbar = () => {
           )}
           <List>
             {menuItems.map((item, index) => (
-              ((item.text === "Admin" && user?.isAdmin===false) || (!user && item.text === "Admin")) ? null: (
+              (((item.text === "Manage" || item.text === "Insights") && user?.isAdmin===false) || (!user && (item.text === "Manage" || item.text === "Insights") )) ? null: (
                 <ListItem
                   button
                   key={index}
