@@ -217,7 +217,7 @@ function Profile() {
                 <Box sx={{ width: '100%' }}>
                     <Typography variant="h6" color="grey" sx={{ mb: 2, mt: 2, textAlign: 'center'}}>Volunteered in:</Typography>
                 </Box>
-                {eventData.slice(0, 5).map((event, index) => (
+                {eventData.slice(0, 1).map((event, index) => (
                     <Box sx={{ width: '100%', mx: 'auto', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',}} key={index}>
                         <FeedbackCard
                             event={event}
@@ -228,7 +228,7 @@ function Profile() {
                 <Box sx={{ width: '100%' }}>
                     <Typography variant="h6" color="grey" sx={{ mb: 2, mt: 2, textAlign: 'center'}}>Participated in:</Typography>
                 </Box>
-                {eventData.slice(0, 8).map((event, index) => (
+                {eventData.slice(1, 3).map((event, index) => (
                     <Box sx={{ width: '100%', mx: 'auto', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',}} key={index}>
                         <FeedbackCard
                             event={event}

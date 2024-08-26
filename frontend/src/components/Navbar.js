@@ -116,7 +116,7 @@ const Navbar = () => {
               The Zubin Foundation
             </Typography>
           )}
-          <Box sx={{width:65, 
+          {user ? (<Box sx={{width:65, 
             display:'flex', 
             flexDirection:'row', 
             justifyContent:'center', 
@@ -127,7 +127,7 @@ const Navbar = () => {
             2750 
             </Typography>
             <StarIcon sx={{fontSize: 18, color:'#FFF'}}/>
-          </Box>
+          </Box>) : null}
           {/* Profile Icon - Floated right on small screens */}
           {user ? (
             <Box sx={{ ml: isSmallScreen ? 'auto' : 'none' }}>
